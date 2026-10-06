@@ -25,31 +25,31 @@ export const AdminDashboardView: React.FC = () => {
   return (
     <div className="space-y-8 max-w-7xl mx-auto py-4">
       {/* Admin Header */}
-      <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-4">
-        <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-800 pb-4">
+      <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm space-y-4">
+        <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 pb-4">
           <div className="space-y-1">
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-purple-500/10 border border-purple-500/30 text-purple-400 text-xs font-bold rounded-full">
-              <Server className="w-3.5 h-3.5" /> DPI System Administration & Architecture
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-purple-50 border border-purple-200 text-purple-800 text-xs font-bold rounded-full shadow-sm">
+              <Server className="w-3.5 h-3.5 text-purple-700" /> DPI System Administration & Architecture
             </div>
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-white">
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900">
               GeoDhara Infrastructure Governance Cockpit
             </h1>
-            <p className="text-xs sm:text-sm text-slate-300">
-              Federation Scope: <span className="font-bold text-white">{currentStateMeta.name}</span> — Administrator: {user?.full_name || 'System Administrator'}
+            <p className="text-xs sm:text-sm text-slate-600">
+              Federation Scope: <span className="font-bold text-slate-900">{currentStateMeta.name}</span> — Administrator: {user?.full_name || 'System Administrator'}
             </p>
           </div>
 
           <div className="flex items-center gap-2">
             <Link
               to="/audit"
-              className="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold rounded-xl border border-slate-700 transition flex items-center gap-1.5 shadow"
+              className="px-4 py-2 bg-[#0B3B60] hover:bg-[#07263F] text-white text-xs font-bold rounded-xl transition flex items-center gap-1.5 shadow-sm"
             >
               <Lock className="w-3.5 h-3.5 text-emerald-400" /> Verify SHA-256 Ledger
             </Link>
           </div>
         </div>
 
-        <p className="text-xs text-slate-400 leading-relaxed">
+        <p className="text-xs text-slate-600 leading-relaxed">
           Monitor platform health across PostgreSQL 16 (PostGIS EPSG:4326), Redis session and cache latency, Express REST API telemetry, and cross-state adapter schema normalization between Telangana Dharani and Karnataka Bhoomi.
         </p>
       </div>
@@ -57,10 +57,10 @@ export const AdminDashboardView: React.FC = () => {
       {/* Module Entry Cards (Admin Entitlements: Modules 1-6 + Infrastructure) */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-xs font-bold text-slate-400 uppercase tracking-wider">
+          <h2 className="text-xs font-bold text-slate-700 uppercase tracking-wider">
             All 6 System Modules & Infrastructure Services
           </h2>
-          <span className="text-[11px] text-emerald-400 font-mono font-semibold flex items-center gap-1">
+          <span className="text-[11px] text-emerald-700 font-mono font-semibold flex items-center gap-1 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
             <ShieldCheck className="w-3.5 h-3.5" /> Superuser Control
           </span>
         </div>
@@ -185,8 +185,8 @@ export const AdminDashboardView: React.FC = () => {
 
       {/* Embedded DPI Overview Component (Reused Existing Component) */}
       <div className="space-y-3">
-        <h2 className="text-sm font-bold text-white uppercase tracking-wide flex items-center gap-2">
-          <Activity className="w-4 h-4 text-purple-400" /> Platform Infrastructure Telemetry
+        <h2 className="text-sm font-bold text-slate-900 uppercase tracking-wide flex items-center gap-2">
+          <Activity className="w-4 h-4 text-[#0B3B60]" /> Platform Infrastructure Telemetry
         </h2>
         <DpiOverview />
       </div>

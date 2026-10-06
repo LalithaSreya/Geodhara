@@ -56,30 +56,30 @@ export const OfficerDashboardView: React.FC = () => {
   return (
     <div className="space-y-8 max-w-7xl mx-auto py-4">
       {/* Officer Header */}
-      <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-4">
-        <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-800 pb-4">
+      <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm space-y-4">
+        <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 pb-4">
           <div className="space-y-1">
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-bold rounded-full">
-              <Building className="w-3.5 h-3.5" /> Revenue Officer Adjudication Cockpit
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-50 border border-blue-200 text-[#0B3B60] text-xs font-bold rounded-full shadow-sm">
+              <Building className="w-3.5 h-3.5 text-[#0B3B60]" /> Revenue Officer Adjudication Cockpit
             </div>
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-white">
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900">
               Tahsildar & Sub-Registrar Portal
             </h1>
-            <p className="text-xs sm:text-sm text-slate-300">
-              Jurisdiction: <span className="font-bold text-white">{currentStateMeta.name}</span> ({currentStateMeta.portalName}) — Adjudicating officer: {user?.full_name || 'Tahsildar'}
+            <p className="text-xs sm:text-sm text-slate-600">
+              Jurisdiction: <span className="font-bold text-slate-900">{currentStateMeta.name}</span> ({currentStateMeta.portalName}) — Adjudicating officer: {user?.full_name || 'Tahsildar'}
             </p>
           </div>
 
           <div className="flex items-center gap-2">
             <button
               onClick={fetchMutations}
-              className="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold rounded-xl flex items-center gap-1.5 transition border border-slate-700"
+              className="px-3.5 py-2 bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold rounded-xl flex items-center gap-1.5 transition border border-slate-300 shadow-sm"
             >
               <RefreshCw className={`w-3.5 h-3.5 ${isLoading ? 'animate-spin' : ''}`} /> Refresh Queue
             </button>
             <Link
               to="/search"
-              className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl shadow-lg transition flex items-center gap-1.5"
+              className="px-4 py-2 bg-[#0B3B60] hover:bg-[#07263F] text-white font-bold text-xs rounded-xl shadow-sm transition flex items-center gap-1.5"
             >
               <Map className="w-3.5 h-3.5" /> GIS Map
             </Link>
@@ -88,25 +88,25 @@ export const OfficerDashboardView: React.FC = () => {
 
         {/* Live Queue Metric Strip */}
         <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 pt-2">
-          <div className="bg-slate-950 p-3 rounded-xl border border-slate-800 text-center">
-            <span className="text-[10px] font-bold text-slate-400 uppercase block">Total Queue</span>
-            <span className="text-xl font-bold font-mono text-white">{stats.total}</span>
+          <div className="bg-slate-50 p-3 rounded-xl border border-slate-200 text-center shadow-sm">
+            <span className="text-[10px] font-bold text-slate-500 uppercase block">Total Queue</span>
+            <span className="text-xl font-bold font-mono text-slate-900">{stats.total}</span>
           </div>
-          <div className="bg-slate-950 p-3 rounded-xl border border-emerald-900/40 text-center">
-            <span className="text-[10px] font-bold text-emerald-400 uppercase block">Auto-Validated (0 Risk)</span>
-            <span className="text-xl font-bold font-mono text-emerald-400">{stats.auto_validated}</span>
+          <div className="bg-emerald-50/70 p-3 rounded-xl border border-emerald-200 text-center shadow-sm">
+            <span className="text-[10px] font-bold text-emerald-800 uppercase block">Auto-Validated (0 Risk)</span>
+            <span className="text-xl font-bold font-mono text-emerald-700">{stats.auto_validated}</span>
           </div>
-          <div className="bg-slate-950 p-3 rounded-xl border border-rose-900/40 text-center">
-            <span className="text-[10px] font-bold text-rose-400 uppercase block">Blocked (Legal Stays)</span>
-            <span className="text-xl font-bold font-mono text-rose-400">{stats.blocked}</span>
+          <div className="bg-rose-50/70 p-3 rounded-xl border border-rose-200 text-center shadow-sm">
+            <span className="text-[10px] font-bold text-rose-800 uppercase block">Blocked (Legal Stays)</span>
+            <span className="text-xl font-bold font-mono text-rose-700">{stats.blocked}</span>
           </div>
-          <div className="bg-slate-950 p-3 rounded-xl border border-amber-900/40 text-center">
-            <span className="text-[10px] font-bold text-amber-400 uppercase block">Field Verification</span>
-            <span className="text-xl font-bold font-mono text-amber-400">{stats.field_req}</span>
+          <div className="bg-amber-50/70 p-3 rounded-xl border border-amber-200 text-center shadow-sm">
+            <span className="text-[10px] font-bold text-amber-800 uppercase block">Field Verification</span>
+            <span className="text-xl font-bold font-mono text-amber-700">{stats.field_req}</span>
           </div>
-          <div className="bg-slate-950 p-3 rounded-xl border border-blue-900/40 text-center">
-            <span className="text-[10px] font-bold text-blue-400 uppercase block">Pending Adjudication</span>
-            <span className="text-xl font-bold font-mono text-blue-400">{stats.officer_review}</span>
+          <div className="bg-blue-50/70 p-3 rounded-xl border border-blue-200 text-center shadow-sm">
+            <span className="text-[10px] font-bold text-[#0B3B60] uppercase block">Pending Adjudication</span>
+            <span className="text-xl font-bold font-mono text-[#0B3B60]">{stats.officer_review}</span>
           </div>
         </div>
       </div>
@@ -114,7 +114,7 @@ export const OfficerDashboardView: React.FC = () => {
       {/* Complete Module Entry Cards (Officer Entitlements: Modules 1-6) */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-xs font-bold text-slate-400 uppercase tracking-wider">
+          <h2 className="text-xs font-bold text-slate-700 uppercase tracking-wider">
             All 6 Operational Governance Modules
           </h2>
           <span className="text-[11px] text-slate-500 font-mono">
@@ -241,26 +241,26 @@ export const OfficerDashboardView: React.FC = () => {
       </div>
 
       {/* Actionable Adjudication Queue Table (Reusing existing table logic) */}
-      <div className="bg-slate-900 border border-slate-800 rounded-3xl shadow-2xl overflow-hidden space-y-4 p-6">
-        <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-800 pb-4">
+      <div className="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden space-y-4 p-6">
+        <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 pb-4">
           <div className="space-y-0.5">
-            <h2 className="text-base font-bold text-white flex items-center gap-2">
-              <FileText className="w-4 h-4 text-blue-400" /> Pending Mutation Applications Queue
+            <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
+              <FileText className="w-4 h-4 text-[#0B3B60]" /> Pending Mutation Applications Queue
             </h2>
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-slate-500">
               Filter by lifecycle state and click 'Review Cockpit' to adjudicate or view parcel intelligence.
             </p>
           </div>
 
-          <div className="flex items-center gap-1.5 overflow-x-auto bg-slate-950 p-1 rounded-xl border border-slate-800">
+          <div className="flex items-center gap-1.5 overflow-x-auto bg-slate-100 p-1 rounded-xl border border-slate-200">
             {['ALL', 'AUTO_VALIDATED', 'BLOCKED', 'OFFICER_REVIEW', 'FIELD_VERIFICATION'].map((st) => (
               <button
                 key={st}
                 onClick={() => setSelectedStatus(st)}
                 className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition ${
                   selectedStatus === st
-                    ? 'bg-blue-600 text-white shadow'
-                    : 'text-slate-400 hover:text-white'
+                    ? 'bg-[#0B3B60] text-white shadow-sm'
+                    : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
                 {st}
@@ -270,8 +270,8 @@ export const OfficerDashboardView: React.FC = () => {
         </div>
 
         <div className="overflow-x-auto">
-          <table className="w-full text-xs text-left text-slate-300">
-            <thead className="bg-slate-950 text-slate-400 uppercase font-bold text-[10px] border-b border-slate-800">
+          <table className="w-full text-xs text-left text-slate-700">
+            <thead className="bg-slate-50 text-slate-600 uppercase font-bold text-[10px] border-b border-slate-200">
               <tr>
                 <th className="px-4 py-3">App Number</th>
                 <th className="px-4 py-3">Target ULPIN / Survey</th>
@@ -282,7 +282,7 @@ export const OfficerDashboardView: React.FC = () => {
                 <th className="px-4 py-3 text-right">Adjudication</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800">
+            <tbody className="divide-y divide-slate-100">
               {mutations.length === 0 ? (
                 <tr>
                   <td colSpan={7} className="px-4 py-8 text-center text-slate-500">
@@ -293,47 +293,47 @@ export const OfficerDashboardView: React.FC = () => {
                 mutations.map((app) => {
                   const applicant = typeof app.applicant === 'string' ? JSON.parse(app.applicant) : app.applicant;
                   return (
-                    <tr key={app.id} className="hover:bg-slate-800/40 transition">
-                      <td className="px-4 py-3.5 font-mono font-bold text-white">
+                    <tr key={app.id} className="hover:bg-slate-50 transition">
+                      <td className="px-4 py-3.5 font-mono font-bold text-slate-900">
                         {app.application_number}
                       </td>
                       <td className="px-4 py-3.5 font-mono">
-                        <Link to={`/parcel/${app.ulpin}`} className="text-emerald-400 hover:underline">
+                        <Link to={`/parcel/${app.ulpin}`} className="text-[#0B3B60] font-bold hover:underline">
                           {app.ulpin}
                         </Link>
-                        <div className="text-[11px] text-slate-400 font-sans">
+                        <div className="text-[11px] text-slate-500 font-sans">
                           Sy: {app.legacy_survey_no || 'N/A'} ({app.village || 'Medchal'})
                         </div>
                       </td>
-                      <td className="px-4 py-3.5 font-medium text-slate-200">
+                      <td className="px-4 py-3.5 font-medium text-slate-800">
                         {applicant?.name || 'Applicant'}
                       </td>
                       <td className="px-4 py-3.5">
                         <span className={`px-2 py-0.5 rounded font-mono font-bold text-[11px] border ${
-                          app.risk_score >= 70 ? 'bg-rose-500/10 text-rose-400 border-rose-500/30' :
-                          app.risk_score >= 30 ? 'bg-amber-500/10 text-amber-400 border-amber-500/30' :
-                          'bg-emerald-500/10 text-emerald-400 border-emerald-500/30'
+                          app.risk_score >= 70 ? 'bg-rose-50 text-rose-800 border-rose-200' :
+                          app.risk_score >= 30 ? 'bg-amber-50 text-amber-800 border-amber-200' :
+                          'bg-emerald-50 text-emerald-800 border-emerald-200'
                         }`}>
                           {app.risk_score}/100
                         </span>
                       </td>
                       <td className="px-4 py-3.5">
                         <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border ${
-                          app.status === 'BLOCKED' ? 'bg-rose-500/20 text-rose-400 border-rose-500/40' :
-                          app.status === 'AUTO_VALIDATED' ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/40' :
-                          app.status === 'FIELD_VERIFICATION' ? 'bg-amber-500/20 text-amber-400 border-amber-500/40' :
-                          'bg-blue-500/20 text-blue-400 border-blue-500/40'
+                          app.status === 'BLOCKED' ? 'bg-rose-50 text-rose-800 border-rose-200' :
+                          app.status === 'AUTO_VALIDATED' ? 'bg-emerald-50 text-emerald-800 border-emerald-200' :
+                          app.status === 'FIELD_VERIFICATION' ? 'bg-amber-50 text-amber-800 border-amber-200' :
+                          'bg-blue-50 text-[#0B3B60] border-blue-200'
                         }`}>
                           {app.status}
                         </span>
                       </td>
-                      <td className="px-4 py-3.5 text-slate-400 text-[11px]">
+                      <td className="px-4 py-3.5 text-slate-500 text-[11px]">
                         {new Date(app.submitted_at).toLocaleDateString()}
                       </td>
                       <td className="px-4 py-3.5 text-right">
                         <button
                           onClick={() => navigate(`/officer/mutation/${app.id}`)}
-                          className="px-3 py-1.5 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-semibold inline-flex items-center gap-1 shadow transition"
+                          className="px-3 py-1.5 bg-[#0B3B60] hover:bg-[#07263F] text-white rounded-lg text-xs font-semibold inline-flex items-center gap-1 shadow-sm transition"
                         >
                           Review Cockpit <ArrowRight className="w-3 h-3" />
                         </button>

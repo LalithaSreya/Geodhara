@@ -38,32 +38,32 @@ export const FieldSurveyorDashboardView: React.FC = () => {
   return (
     <div className="space-y-8 max-w-6xl mx-auto py-4">
       {/* Field Surveyor Header */}
-      <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-4">
-        <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-800 pb-4">
+      <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm space-y-4">
+        <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 pb-4">
           <div className="space-y-1">
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-bold rounded-full">
-              <Smartphone className="w-3.5 h-3.5" /> Field Surveyor Ground Truth Studio
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-amber-50 border border-amber-200 text-amber-800 text-xs font-bold rounded-full shadow-sm">
+              <Smartphone className="w-3.5 h-3.5 text-amber-700" /> Field Surveyor Ground Truth Studio
             </div>
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-white">
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900">
               Cadastral Inspection Portal
             </h1>
-            <p className="text-xs sm:text-sm text-slate-300">
-              Surveyor: <span className="font-bold text-white">{user?.full_name || 'K. Suresh'}</span> — Operational Zone: {currentStateMeta.name} ({currentStateMeta.districtFocus})
+            <p className="text-xs sm:text-sm text-slate-600">
+              Surveyor: <span className="font-bold text-slate-900">{user?.full_name || 'K. Suresh'}</span> — Operational Zone: {currentStateMeta.name} ({currentStateMeta.districtFocus})
             </p>
           </div>
 
           {/* Online/Offline Status Indicator */}
-          <div className={`flex items-center gap-2 px-3.5 py-1.5 rounded-xl border text-xs font-mono font-bold ${
+          <div className={`flex items-center gap-2 px-3.5 py-1.5 rounded-xl border text-xs font-mono font-bold shadow-sm ${
             isOnline 
-              ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30' 
-              : 'bg-rose-500/10 text-rose-400 border-rose-500/30'
+              ? 'bg-emerald-50 text-emerald-800 border-emerald-200' 
+              : 'bg-rose-50 text-rose-800 border-rose-200'
           }`}>
-            {isOnline ? <Wifi className="w-4 h-4" /> : <WifiOff className="w-4 h-4" />}
+            {isOnline ? <Wifi className="w-4 h-4 text-emerald-600" /> : <WifiOff className="w-4 h-4 text-rose-600" />}
             <span>{isOnline ? 'ONLINE (Direct Cloud Sync)' : 'OFFLINE (IndexedDB Local Store)'}</span>
           </div>
         </div>
 
-        <p className="text-xs text-slate-400 leading-relaxed">
+        <p className="text-xs text-slate-600 leading-relaxed">
           This studio is an offline-capable Progressive Web Application (PWA). You can record GPS ground observations, snap geotagged photo evidence, and inspect physical boundaries in remote rural tracts without cellular connectivity.
         </p>
       </div>
@@ -71,7 +71,7 @@ export const FieldSurveyorDashboardView: React.FC = () => {
       {/* Relevant Module Entry Cards (Field Surveyor Entitlements: Modules 5, 1, 4) */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-xs font-bold text-slate-400 uppercase tracking-wider">
+          <h2 className="text-xs font-bold text-slate-700 uppercase tracking-wider">
             Field Officer Modules (3 Active)
           </h2>
           <span className="text-[11px] text-slate-500 font-mono">
@@ -142,8 +142,8 @@ export const FieldSurveyorDashboardView: React.FC = () => {
 
       {/* Embedded Field Observation Studio (Reused Existing Component) */}
       <div className="space-y-3">
-        <h2 className="text-sm font-bold text-white uppercase tracking-wide flex items-center gap-2">
-          <Smartphone className="w-4 h-4 text-amber-400" /> Active Ground Truth Observation Workspace
+        <h2 className="text-sm font-bold text-slate-900 uppercase tracking-wide flex items-center gap-2">
+          <Smartphone className="w-4 h-4 text-[#0B3B60]" /> Active Ground Truth Observation Workspace
         </h2>
         <FieldObservationStudio />
       </div>

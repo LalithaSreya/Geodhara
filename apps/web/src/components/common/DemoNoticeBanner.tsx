@@ -1,31 +1,39 @@
 import React from 'react';
-import { AlertTriangle, ShieldCheck } from 'lucide-react';
+import { AlertTriangle, ShieldCheck, Landmark } from 'lucide-react';
 
 export const DemoNoticeBanner: React.FC = () => {
   return (
-    <aside aria-label="Demo environment notice" className="bg-gradient-to-r from-amber-950/90 via-amber-900/80 to-amber-950/90 border-b border-amber-500/30 px-4 py-1.5 text-xs text-amber-200">
-      <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
-        <div className="flex items-center gap-2 font-medium">
-          <span className="flex h-2 w-2 relative">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
-          </span>
-          <span className="bg-amber-500/20 text-amber-300 font-bold px-1.5 py-0.5 rounded text-[10px] tracking-wide border border-amber-500/30">
-            DEMO ENVIRONMENT
-          </span>
-          <span className="font-semibold text-amber-100">
-            All data is synthetic. Government integrations are represented by mock adapters.
-          </span>
+    <div className="w-full">
+      {/* Official Government Tricolor Top Stripe */}
+      <div className="h-1 w-full bg-gradient-to-r from-[#FF9933] via-white to-[#138808]" />
+
+      {/* Official Top Ministry Masthead Strip */}
+      <aside aria-label="Demo environment notice" className="bg-slate-100 border-b border-slate-200 px-4 py-1.5 text-xs text-slate-700 shadow-sm">
+        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
+          {/* Government of India & Ministry Brand */}
+          <div className="flex items-center gap-2 text-[11px] font-medium text-slate-800">
+            <span className="font-bold text-slate-900 flex items-center gap-1.5">
+              <span className="text-base leading-none">🏛️</span>
+              <span>भारत सरकार | Government of India</span>
+            </span>
+            <span className="text-slate-400 hidden sm:inline">•</span>
+            <span className="text-slate-600 hidden sm:inline">
+              Ministry of Rural Development • Department of Land Resources (DoLR)
+            </span>
+          </div>
+
+          {/* Prototype & Synthetic Simulation Badge */}
+          <div className="flex items-center gap-2 text-[11px]">
+            <span className="flex items-center gap-1.5 bg-amber-50 text-amber-800 font-bold px-2 py-0.5 rounded text-[10px] tracking-wide border border-amber-300">
+              <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
+              <span>SIH 2026 PROTOTYPE (PS 26014)</span>
+            </span>
+            <span className="text-slate-500 hidden md:inline">• Synthetic Demo Data</span>
+            <span className="text-slate-500 hidden md:inline">• ULPIN Standard Compliant</span>
+          </div>
         </div>
-        <div className="hidden md:flex items-center gap-3 text-amber-300/80 text-[11px]">
-          <span className="flex items-center gap-1">
-            <ShieldCheck className="w-3.5 h-3.5 text-brand-400" />
-            ULPIN: 14-char Opaque Identifiers
-          </span>
-          <span>•</span>
-          <span>SIH 2026 Prototype — PS 26014</span>
-        </div>
-      </div>
-    </aside>
+      </aside>
+    </div>
   );
 };
+

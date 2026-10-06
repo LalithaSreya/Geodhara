@@ -34,21 +34,21 @@ export class ErrorBoundary extends Component<Props, State> {
     if (this.state.hasError) {
       return (
         <div className="min-h-[400px] flex items-center justify-center p-6">
-          <div className="bg-slate-900 border border-slate-800 rounded-3xl p-8 max-w-lg w-full text-center space-y-4 shadow-2xl">
-            <div className="w-14 h-14 rounded-2xl bg-rose-500/10 border border-rose-500/30 text-rose-400 flex items-center justify-center mx-auto">
+          <div className="bg-white border border-slate-200 rounded-2xl p-8 max-w-lg w-full text-center space-y-4 shadow-sm">
+            <div className="w-14 h-14 rounded-2xl bg-rose-50 border border-rose-200 text-rose-600 flex items-center justify-center mx-auto">
               <AlertTriangle className="w-7 h-7" />
             </div>
             <div className="space-y-1">
-              <h2 className="text-xl font-bold text-white">
+              <h2 className="text-xl font-bold text-slate-900">
                 {this.props.fallbackTitle || 'Component Render Interruption'}
               </h2>
-              <p className="text-xs text-slate-400 leading-relaxed">
+              <p className="text-xs text-slate-600 leading-relaxed">
                 A non-critical rendering error was caught by the GeoDhara safety boundary.
               </p>
             </div>
 
             {this.state.error?.message && (
-              <div className="p-3 bg-slate-950 border border-slate-800 rounded-xl text-left font-mono text-[11px] text-rose-300 overflow-x-auto max-h-24">
+              <div className="p-3 bg-rose-50/50 border border-rose-200 rounded-xl text-left font-mono text-[11px] text-rose-800 overflow-x-auto max-h-24">
                 {this.state.error.message}
               </div>
             )}
@@ -56,13 +56,13 @@ export class ErrorBoundary extends Component<Props, State> {
             <div className="flex items-center justify-center gap-3 pt-2">
               <button
                 onClick={this.handleReset}
-                className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-xl transition flex items-center gap-1.5 shadow cursor-pointer"
+                className="px-4 py-2 bg-[#0B3B60] hover:bg-[#07263F] text-white text-xs font-bold rounded-xl transition flex items-center gap-1.5 shadow cursor-pointer"
               >
                 <RefreshCw className="w-3.5 h-3.5" /> Reload View
               </button>
               <a
                 href="/"
-                className="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold rounded-xl border border-slate-700 transition flex items-center gap-1.5 cursor-pointer"
+                className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold rounded-xl border border-slate-200 transition flex items-center gap-1.5 cursor-pointer"
               >
                 <Home className="w-3.5 h-3.5" /> Return Home
               </a>

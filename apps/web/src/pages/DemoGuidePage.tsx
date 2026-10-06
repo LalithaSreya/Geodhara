@@ -33,7 +33,7 @@ export const DemoGuidePage: React.FC = () => {
       link: '/parcel/TSQXY9QM4KNXSZ',
       action: 'Open 360° Dossier',
       tag: 'CLEAN TITLE',
-      color: 'border-emerald-500/30 bg-emerald-500/10 text-emerald-400',
+      color: 'border-emerald-200 bg-emerald-50 text-emerald-800',
     },
     {
       step: '02',
@@ -43,7 +43,7 @@ export const DemoGuidePage: React.FC = () => {
       link: '/parcel/TSZQ5STGR65JMU',
       action: 'Inspect Encumbrance',
       tag: 'SBI MORTGAGE',
-      color: 'border-amber-500/30 bg-amber-500/10 text-amber-400',
+      color: 'border-amber-200 bg-amber-50 text-amber-800',
     },
     {
       step: '03',
@@ -53,7 +53,7 @@ export const DemoGuidePage: React.FC = () => {
       link: '/parcel/TSSMSR2Z03QTQD',
       action: 'Inspect Court Stay',
       tag: 'STAY ORDER',
-      color: 'border-rose-500/30 bg-rose-500/10 text-rose-400',
+      color: 'border-rose-200 bg-rose-50 text-rose-800',
     },
     {
       step: '04',
@@ -63,7 +63,7 @@ export const DemoGuidePage: React.FC = () => {
       link: '/parcel/KAQMWVSBJHWXC7',
       action: 'Inspect Bhoomi Parcel',
       tag: 'KARNATAKA BHOOMI',
-      color: 'border-blue-500/30 bg-blue-500/10 text-blue-400',
+      color: 'border-blue-200 bg-blue-50 text-[#0B3B60]',
     },
     {
       step: '05',
@@ -73,7 +73,7 @@ export const DemoGuidePage: React.FC = () => {
       link: '/parcel/TSHUK8ZNXG7QVJ',
       action: 'View Satellite Alert',
       tag: 'AI CHANGE ALERT',
-      color: 'border-purple-500/30 bg-purple-500/10 text-purple-400',
+      color: 'border-purple-200 bg-purple-50 text-purple-800',
     },
     {
       step: '06',
@@ -83,7 +83,7 @@ export const DemoGuidePage: React.FC = () => {
       link: '/parcel/TS9NTJH8MYKGDE',
       action: 'Inspect Churn',
       tag: 'CHURN DETECTED',
-      color: 'border-amber-500/30 bg-amber-500/10 text-amber-400',
+      color: 'border-amber-200 bg-amber-50 text-amber-800',
     },
     {
       step: '07',
@@ -92,7 +92,7 @@ export const DemoGuidePage: React.FC = () => {
       link: '/search',
       action: 'Open Resolver',
       tag: 'MAPPING ENGINE',
-      color: 'border-cyan-500/30 bg-cyan-500/10 text-cyan-400',
+      color: 'border-blue-200 bg-blue-50 text-[#0B3B60]',
     },
     {
       step: '08',
@@ -101,52 +101,50 @@ export const DemoGuidePage: React.FC = () => {
       link: '/audit',
       action: 'Verify Hash Chain',
       tag: 'IMMUTABLE AUDIT',
-      color: 'border-emerald-500/30 bg-emerald-500/10 text-emerald-400',
+      color: 'border-emerald-200 bg-emerald-50 text-emerald-800',
     },
   ];
 
   return (
     <div className="max-w-5xl mx-auto py-8 px-4 space-y-8">
       {/* Header */}
-      <div className="bg-slate-900 border border-slate-800 rounded-3xl p-8 shadow-2xl space-y-4">
-        <div className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold rounded-full">
+      <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm space-y-4">
+        <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-50 border border-blue-200 text-[#0B3B60] text-xs font-bold rounded-full">
           <Award className="w-4 h-4" /> Smart India Hackathon 2026 Jury Demonstration Guide
         </div>
-        <h1 className="text-3xl font-extrabold text-white">
+        <h1 className="text-3xl font-extrabold text-slate-900">
           GeoDhara Evaluation Walkthrough & Planted Cases
         </h1>
-        <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-3xl">
+        <p className="text-xs sm:text-sm text-slate-600 leading-relaxed max-w-3xl">
           Problem Statement PS 26014 requires a unified GIS-based digital public infrastructure for land governance.
           This guide lists the pre-planted competition demo cases across Telangana (Medchal) and Karnataka (Devanahalli).
         </p>
       </div>
 
-
-
       {/* Checkpoints Grid */}
       <div className="space-y-4">
-        <h2 className="text-xl font-bold text-white border-b border-slate-800 pb-3">
+        <h2 className="text-xl font-bold text-slate-900 border-b border-slate-200 pb-3">
           Platform Architecture & Spatial Verification Checkpoints
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {checkpoints.map((cp) => (
             <div
               key={cp.step}
-              className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 flex flex-col justify-between space-y-4 shadow-xl hover:border-emerald-500/40 transition group"
+              className="bg-white border border-slate-200 rounded-2xl p-5 flex flex-col justify-between space-y-4 shadow-sm hover:border-[#0B3B60]/40 transition group"
             >
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-mono font-bold text-slate-500">CHECKPOINT {cp.step}</span>
+                  <span className="text-xs font-mono font-bold text-slate-400">CHECKPOINT {cp.step}</span>
                   <span className={`text-[10px] uppercase font-bold px-2 py-0.5 rounded border ${cp.color}`}>
                     {cp.tag}
                   </span>
                 </div>
-                <h3 className="text-sm font-bold text-white group-hover:text-emerald-300 transition">
+                <h3 className="text-sm font-bold text-slate-900 group-hover:text-[#0B3B60] transition">
                   {cp.title}
                 </h3>
-                <p className="text-xs text-slate-400 leading-relaxed">{cp.desc}</p>
+                <p className="text-xs text-slate-600 leading-relaxed">{cp.desc}</p>
                 {cp.ulpin && (
-                  <div className="font-mono text-xs text-emerald-400 font-bold bg-slate-950 p-2 rounded-lg border border-slate-800">
+                  <div className="font-mono text-xs text-[#0B3B60] font-bold bg-slate-50 p-2 rounded-lg border border-slate-200">
                     Target ULPIN: {cp.ulpin}
                   </div>
                 )}
@@ -154,7 +152,7 @@ export const DemoGuidePage: React.FC = () => {
 
               <Link
                 to={cp.link}
-                className="w-full bg-slate-800 hover:bg-emerald-600 text-white font-bold text-xs py-2 px-4 rounded-xl flex items-center justify-center gap-2 shadow transition"
+                className="w-full bg-[#0B3B60] hover:bg-[#07263F] text-white font-bold text-xs py-2.5 px-4 rounded-xl flex items-center justify-center gap-2 shadow transition"
               >
                 {cp.action} <ArrowRight className="w-4 h-4" />
               </Link>

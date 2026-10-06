@@ -25,7 +25,17 @@ export default {
           850: '#151f32',
           900: '#0f172a',
           950: '#020617',
-        }
+        },
+        gov: {
+          navy: '#0B3B60',
+          navyDark: '#07263F',
+          navyLight: '#124E7D',
+          saffron: '#FF9933',
+          saffronDark: '#D97706',
+          green: '#138808',
+          greenDark: '#0E6A05',
+          gold: '#D4AF37',
+        },
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],

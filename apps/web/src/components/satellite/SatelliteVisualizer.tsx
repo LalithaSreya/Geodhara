@@ -170,18 +170,18 @@ export const SatelliteVisualizer: React.FC<SatelliteVisualizerProps> = ({
   };
 
   return (
-    <div className="bg-slate-950 border border-slate-800 rounded-2xl p-4 space-y-4 text-xs select-none">
+    <div className="bg-white border border-slate-200 shadow-sm rounded-2xl p-4 space-y-4 text-xs select-none">
       {/* Visualizer Top Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-3">
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 pb-3">
         <div className="flex items-center gap-2">
-          <Satellite className="w-4 h-4 text-purple-400" />
-          <span className="font-bold text-slate-100 uppercase tracking-wider">
+          <Satellite className="w-4 h-4 text-[#0B3B60]" />
+          <span className="font-bold text-slate-900 uppercase tracking-wider">
             Optical Differencing Inspector
           </span>
         </div>
 
         {/* View Mode Switcher */}
-        <div className="flex items-center gap-1 bg-slate-900 p-1 rounded-xl border border-slate-800">
+        <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl border border-slate-200">
           {[
             { id: 'SLIDER', label: 'Before ↔ After' },
             { id: 'DIFFERENCE_HEATMAP', label: 'Δ Spectral Heatmap' },
@@ -193,8 +193,8 @@ export const SatelliteVisualizer: React.FC<SatelliteVisualizerProps> = ({
               onClick={() => setViewMode(mode.id as any)}
               className={`px-2.5 py-1 rounded-lg font-medium transition ${
                 viewMode === mode.id
-                  ? 'bg-purple-600 text-white shadow'
-                  : 'text-slate-400 hover:text-slate-200'
+                  ? 'bg-[#0B3B60] text-white shadow'
+                  : 'text-slate-600 hover:text-slate-900'
               }`}
             >
               {mode.label}
@@ -210,14 +210,14 @@ export const SatelliteVisualizer: React.FC<SatelliteVisualizerProps> = ({
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseUp}
         onMouseMove={handleMouseMove}
-        className="relative w-full h-56 sm:h-64 rounded-xl overflow-hidden bg-slate-900 border border-slate-800 cursor-ew-resize"
+        className="relative w-full h-56 sm:h-64 rounded-xl overflow-hidden bg-slate-900 border border-slate-200 cursor-ew-resize shadow-inner"
       >
         {viewMode === 'SLIDER' ? (
           <>
             {/* After Scene (Base Layer) */}
             <div className="absolute inset-0 flex items-center justify-center">
               <canvas ref={afterCanvasRef} width={300} height={200} className="w-full h-full object-cover" />
-              <div className="absolute top-2 right-2 bg-slate-950/80 px-2 py-0.5 rounded text-[10px] font-mono text-purple-300 border border-purple-500/30">
+              <div className="absolute top-2 right-2 bg-slate-950/80 px-2 py-0.5 rounded text-[10px] font-mono text-purple-200 border border-purple-500/30">
                 AFTER: {afterDate}
               </div>
             </div>
@@ -244,7 +244,7 @@ export const SatelliteVisualizer: React.FC<SatelliteVisualizerProps> = ({
               className="absolute top-0 bottom-0 w-0.5 bg-white shadow-lg pointer-events-none"
               style={{ left: `${sliderPosition}%` }}
             >
-              <div className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-7 h-7 rounded-full bg-purple-600 text-white flex items-center justify-center shadow-2xl border-2 border-white">
+              <div className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-7 h-7 rounded-full bg-[#0B3B60] text-white flex items-center justify-center shadow-xl border-2 border-white">
                 <Sliders className="w-3.5 h-3.5" />
               </div>
             </div>
@@ -259,14 +259,14 @@ export const SatelliteVisualizer: React.FC<SatelliteVisualizerProps> = ({
         {showPolygonOverlay && (
           <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
             <div className={`border-2 border-dashed rounded-lg p-2 flex flex-col items-center justify-center ${
-              isVegLoss ? 'border-rose-400 bg-rose-500/10' : 'border-amber-400 bg-amber-500/10'
+              isVegLoss ? 'border-rose-400 bg-rose-500/20' : 'border-amber-400 bg-amber-500/20'
             }`} style={{ width: '55%', height: '50%' }}>
               <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded ${
-                isVegLoss ? 'bg-rose-500 text-white' : 'bg-amber-500 text-slate-950'
+                isVegLoss ? 'bg-rose-600 text-white' : 'bg-amber-600 text-white'
               }`}>
                 {type}
               </span>
-              <span className="text-[9px] text-white font-mono mt-0.5">
+              <span className="text-[9px] text-white font-mono mt-0.5 drop-shadow">
                 {(confidence * 100).toFixed(0)}% Confidence
               </span>
             </div>
@@ -275,26 +275,26 @@ export const SatelliteVisualizer: React.FC<SatelliteVisualizerProps> = ({
       </div>
 
       {/* Visualizer Controls Footer */}
-      <div className="flex flex-wrap items-center justify-between gap-2 text-[11px] text-slate-400 pt-1">
-        <label className="flex items-center gap-1.5 cursor-pointer hover:text-slate-200">
+      <div className="flex flex-wrap items-center justify-between gap-2 text-[11px] text-slate-500 pt-1">
+        <label className="flex items-center gap-1.5 cursor-pointer hover:text-slate-800">
           <input
             type="checkbox"
             checked={showPolygonOverlay}
             onChange={(e) => setShowPolygonOverlay(e.target.checked)}
-            className="rounded border-slate-700 text-purple-600 focus:ring-0 bg-slate-900"
+            className="rounded border-slate-300 text-[#0B3B60] focus:ring-0"
           />
           <span>Show Detected Change Boundary Overlay</span>
         </label>
 
         <div className="flex items-center gap-3">
-          <span>Cloud Interference: <strong className={cloudPct > 20 ? 'text-rose-400' : 'text-emerald-400'}>{cloudPct}%</strong></span>
+          <span>Cloud Interference: <strong className={cloudPct > 20 ? 'text-rose-600' : 'text-emerald-600'}>{cloudPct}%</strong></span>
           <span>Sensor: <strong>Sentinel-2 L2A (10m)</strong></span>
         </div>
       </div>
 
       {/* Scientific Transparency Notice */}
-      <div className="bg-slate-900/80 border border-slate-800 p-2.5 rounded-xl text-[10px] text-slate-400 leading-relaxed">
-        ℹ️ <strong>Automated Radiometric Index Differencing:</strong> Change vectors are computed via physical band equations ($\Delta NDVI = B08-B04$, $\Delta NDBI = B11-B08$). No black-box AI claims. Officer ground inspection required.
+      <div className="bg-slate-50 border border-slate-200 p-2.5 rounded-xl text-[10px] text-slate-600 leading-relaxed">
+        ℹ️ <strong>Automated Radiometric Index Differencing:</strong> Change vectors are computed via physical band equations (ΔNDVI = B08-B04, ΔNDBI = B11-B08). No black-box AI claims. Officer ground inspection required.
       </div>
     </div>
   );

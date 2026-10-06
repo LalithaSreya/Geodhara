@@ -26,23 +26,23 @@ export const DashboardPage: React.FC = () => {
   return (
     <div className="space-y-6 max-w-5xl mx-auto py-4">
       {/* Welcome Banner */}
-      <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-4">
-        <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-800 pb-4">
+      <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm space-y-4">
+        <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200 pb-4">
           <div className="space-y-1">
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold rounded-full">
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-50 border border-blue-200 text-[#0B3B60] text-xs font-bold rounded-full">
               <User className="w-3.5 h-3.5" /> Citizen Land Portfolio
             </div>
-            <h1 className="text-2xl font-extrabold text-white">
+            <h1 className="text-2xl font-extrabold text-slate-900">
               Welcome back, {user?.full_name || 'Citizen User'}
             </h1>
-            <p className="text-xs text-slate-300">
+            <p className="text-xs text-slate-600">
               Manage your registered land parcels, track pending mutation applications, and download certified Record of Rights copies.
             </p>
           </div>
 
           <Link
             to="/mutation"
-            className="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl shadow-lg transition flex items-center gap-2"
+            className="px-4 py-2.5 bg-[#0B3B60] hover:bg-[#07263F] text-white font-bold text-xs rounded-xl shadow transition flex items-center gap-2"
           >
             <FileText className="w-4 h-4" /> Apply for Mutation
           </Link>
@@ -50,12 +50,12 @@ export const DashboardPage: React.FC = () => {
 
         {/* Quick Search */}
         <div className="pt-2">
-          <span className="text-xs font-bold text-slate-400 block mb-2">Search any parcel across India:</span>
+          <span className="text-xs font-bold text-slate-600 block mb-2">Search any parcel across India:</span>
           <div className="flex gap-2">
             <input
               type="text"
               placeholder="Enter 14-char ULPIN (e.g. TSQXY9QM4KNXSZ) or Survey Number..."
-              className="flex-1 bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-white placeholder-slate-500 font-mono"
+              className="flex-1 bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-xs text-slate-900 placeholder-slate-400 font-mono focus:outline-none focus:border-[#0B3B60] focus:bg-white"
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
                   const val = (e.target as HTMLInputElement).value.trim();
@@ -65,7 +65,7 @@ export const DashboardPage: React.FC = () => {
             />
             <button
               onClick={() => navigate('/search')}
-              className="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold rounded-xl transition flex items-center gap-1.5"
+              className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 text-xs font-bold rounded-xl transition flex items-center gap-1.5"
             >
               <Search className="w-4 h-4" /> Search
             </button>
@@ -74,37 +74,37 @@ export const DashboardPage: React.FC = () => {
       </div>
 
       {/* Citizen Land Parcels */}
-      <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-2xl space-y-4">
-        <h2 className="text-sm font-bold text-white uppercase tracking-wide border-b border-slate-800 pb-3 flex items-center gap-2">
-          <MapPin className="w-4 h-4 text-emerald-400" /> Your Verified Registered Land Holdings
+      <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
+        <h2 className="text-sm font-bold text-slate-900 uppercase tracking-wide border-b border-slate-200 pb-3 flex items-center gap-2">
+          <MapPin className="w-4 h-4 text-[#0B3B60]" /> Your Verified Registered Land Holdings
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {citizenParcels.map((p) => (
             <div
               key={p.ulpin}
-              className="bg-slate-950 border border-slate-800 hover:border-emerald-500/50 rounded-2xl p-5 space-y-3 transition shadow group"
+              className="bg-slate-50 border border-slate-200 hover:border-[#0B3B60]/40 rounded-2xl p-5 space-y-3 transition shadow-sm group"
             >
               <div className="flex items-center justify-between">
-                <span className="font-mono font-bold text-xs text-emerald-400">{p.ulpin}</span>
-                <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+                <span className="font-mono font-bold text-xs text-[#0B3B60]">{p.ulpin}</span>
+                <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200">
                   {p.status}
                 </span>
               </div>
 
-              <div className="text-xs text-slate-300">
-                Survey Number: <span className="font-bold text-white">{p.survey}</span> ({p.village})
+              <div className="text-xs text-slate-700">
+                Survey Number: <span className="font-bold text-slate-900">{p.survey}</span> ({p.village})
               </div>
 
-              <div className="text-xs text-slate-400 flex items-center justify-between font-mono">
+              <div className="text-xs text-slate-500 flex items-center justify-between font-mono">
                 <span>Total Extent: {p.area}</span>
-                <span className="text-emerald-400 font-bold">Ownership: {p.share}</span>
+                <span className="text-emerald-700 font-bold">Ownership: {p.share}</span>
               </div>
 
-              <div className="pt-2 border-t border-slate-800 flex justify-end">
+              <div className="pt-2 border-t border-slate-200 flex justify-end">
                 <Link
                   to={`/parcel/${p.ulpin}`}
-                  className="text-xs font-bold text-emerald-400 hover:text-emerald-300 flex items-center gap-1"
+                  className="text-xs font-bold text-[#0B3B60] hover:underline flex items-center gap-1"
                 >
                   View 360° Record <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
