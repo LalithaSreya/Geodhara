@@ -88,6 +88,8 @@ export const UnifiedParcelPage: React.FC = () => {
   }
 
   const { parcel, risk_assessment, ownership, land_records } = parcelData;
+  const riskCategory = risk_assessment?.category || risk_assessment?.level || 'LOW';
+  const riskScore = risk_assessment?.score || 0;
 
   return (
     <div className="space-y-6">
@@ -111,13 +113,13 @@ export const UnifiedParcelPage: React.FC = () => {
                 {parcel.ulpin}
               </h1>
               <span className={`text-xs font-bold px-2.5 py-1 rounded-full border ${
-                risk_assessment.category === 'CRITICAL' || risk_assessment.category === 'HIGH'
+                riskCategory === 'CRITICAL' || riskCategory === 'HIGH'
                   ? 'bg-rose-500/10 text-rose-400 border-rose-500/30'
-                  : risk_assessment.category === 'MEDIUM'
+                  : riskCategory === 'MEDIUM'
                   ? 'bg-amber-500/10 text-amber-400 border-amber-500/30'
                   : 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30'
               }`}>
-                RISK SCORE: {risk_assessment.score}/100 ({risk_assessment.category})
+                RISK SCORE: {riskScore}/100 ({riskCategory})
               </span>
             </div>
           </div>
@@ -186,8 +188,8 @@ export const UnifiedParcelPage: React.FC = () => {
       {showRorModal && (
         <RoRPdfModal
           parcel={parcel}
-          owners={ownership.current_owners}
-          landRecord={land_records[0]}
+          owners={ownership?.current_owners || []}
+          landRecord={land_records?.[0] || {}}
           onClose={() => setShowRorModal(false)}
         />
       )}

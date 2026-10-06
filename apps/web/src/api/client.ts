@@ -32,7 +32,11 @@ export class ApiClient {
         return { data: p.risk_assessment };
       }
       if (clean.endsWith('/neighbours')) {
-        return { data: Object.values(MOCK_PARCELS_360).slice(0, 3) };
+        const list = Object.values(MOCK_PARCELS_360).slice(0, 3).map((p) => ({
+          ...p.parcel,
+          geometry: p.parcel.boundary_geojson,
+        }));
+        return { data: { neighbours: list } };
       }
       return { data: generateSyntheticParcelFallback(ulpin) };
     }
@@ -45,6 +49,7 @@ export class ApiClient {
         current_owners: item.ownership.current_owners,
       }));
       return {
+        type: 'FeatureCollection',
         results: allParcels,
         total: allParcels.length,
         features: allParcels.map((p) => ({
@@ -95,18 +100,57 @@ export class ApiClient {
       if (clean.includes('/verify')) {
         return { data: { status: 'OFFICER_VERIFIED' } };
       }
+      const parts = clean.split('/');
+      if (parts.length > 2 && parts[2]) {
+        const found = MOCK_CHANGE_ALERTS.find((a) => a.id === parts[2]);
+        return { data: found || MOCK_CHANGE_ALERTS[0] };
+      }
       return { data: MOCK_CHANGE_ALERTS };
     }
 
     // 5. Mutation Queue
     if (clean.startsWith('/mutation')) {
       if (options.method === 'POST') {
+        let body: any = {};
+        try {
+          body = options.body ? JSON.parse(options.body as string) : {};
+        } catch {}
         return {
           message: 'Mutation submitted successfully (Synthetic Simulation)',
           data: {
-            ...MOCK_MUTATIONS_LIST[0],
             id: `mut-${Date.now()}`,
             application_number: `MUT-2026-${Math.floor(1000 + Math.random() * 9000)}`,
+            ulpin: body.parcelId || 'TSQXY9QM4KNXSZ',
+            legacy_survey_no: '101/1',
+            village: 'Medchal',
+            applicant: body.applicant || { name: 'Vanga Nishith Reddy', id_number: 'AADHAAR-8891-2309' },
+            risk_score: 12,
+            status: 'AUTO_VALIDATED',
+            version: 1,
+            submitted_at: new Date().toISOString(),
+          },
+        };
+      }
+      const parts = clean.split('/');
+      if (parts.length > 2 && parts[2] && parts[2] !== 'validate') {
+        const found = MOCK_MUTATIONS_LIST.find((m) => m.id === parts[2] || m.application_number === parts[2]);
+        const baseApp = found || MOCK_MUTATIONS_LIST[0];
+        return {
+          data: {
+            ...baseApp,
+            version: 1,
+            validation_results: {
+              is_valid: baseApp.status !== 'BLOCKED',
+              risk_factors: [
+                {
+                  factor: 'ENCUMBRANCE_OR_STAY_CHECK',
+                  score: baseApp.risk_score,
+                  reason: baseApp.blocked_reason || 'Statutory automated rule assessment passed',
+                  severity: baseApp.risk_score >= 70 ? 'CRITICAL' : baseApp.risk_score >= 30 ? 'HIGH' : 'LOW',
+                  evidence: { status: baseApp.status },
+                },
+              ],
+            },
           },
         };
       }

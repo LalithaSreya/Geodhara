@@ -17,14 +17,14 @@ export interface RiskRuleItem {
   rule: string;
   points: number;
   reason: string;
-  evidence: Record<string, any>;
-  severity: 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL';
+  evidence?: Record<string, any>;
+  severity?: 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL';
 }
 
 export interface RiskExplainerProps {
   score: number;
   level?: 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL';
-  breakdown?: RiskRuleItem[];
+  breakdown?: RiskRuleItem[] | Record<string, any>;
   evaluatedAt?: string;
   compact?: boolean;
 }
@@ -37,6 +37,28 @@ export const RiskExplainer: React.FC<RiskExplainerProps> = ({
   compact = false,
 }) => {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
+
+  // Defensively normalize breakdown whether it is an array of RiskRuleItem or a record object
+  const normalizedBreakdown: RiskRuleItem[] = Array.isArray(breakdown)
+    ? breakdown
+    : breakdown && typeof breakdown === 'object'
+    ? Object.entries(breakdown)
+        .filter(([_, val]) => typeof val === 'number' && (val as number) > 0)
+        .map(([key, val]) => ({
+          rule: key.toUpperCase().replace(/_/g, ' ') + '_FACTOR',
+          points: Number(val),
+          reason: `Risk score elevated due to ${key.replace(/_/g, ' ')} factor assessment.`,
+          evidence: { [key]: val },
+          severity:
+            Number(val) >= 50
+              ? 'CRITICAL'
+              : Number(val) >= 30
+              ? 'HIGH'
+              : Number(val) >= 15
+              ? 'MEDIUM'
+              : 'LOW',
+        }))
+    : [];
 
   // Compute level if not explicitly provided
   const level = propLevel || (
@@ -130,7 +152,7 @@ export const RiskExplainer: React.FC<RiskExplainerProps> = ({
         <div className="flex items-center justify-between">
           <span className="text-xs font-bold text-slate-300 uppercase tracking-wide flex items-center gap-1.5">
             <Info className="w-4 h-4 text-blue-400" />
-            Why is this {level.toLowerCase()} risk? ({breakdown.length} rule factors triggered)
+            Why is this {level.toLowerCase()} risk? ({normalizedBreakdown.length} rule factors triggered)
           </span>
           {evaluatedAt && (
             <span className="text-[10px] font-mono text-slate-500">
@@ -139,7 +161,7 @@ export const RiskExplainer: React.FC<RiskExplainerProps> = ({
           )}
         </div>
 
-        {breakdown.length === 0 ? (
+        {normalizedBreakdown.length === 0 ? (
           <div className="p-4 bg-emerald-500/10 border border-emerald-500/30 rounded-xl text-emerald-300 text-xs flex items-center gap-2.5">
             <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0" />
             <div>
@@ -151,7 +173,7 @@ export const RiskExplainer: React.FC<RiskExplainerProps> = ({
           </div>
         ) : (
           <div className="space-y-2">
-            {breakdown.map((item, idx) => {
+            {normalizedBreakdown.map((item, idx) => {
               const isExpanded = expandedIndex === idx;
               const severityBadge = {
                 CRITICAL: 'bg-rose-500/20 text-rose-300 border-rose-500/40',

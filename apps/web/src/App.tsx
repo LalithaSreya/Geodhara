@@ -4,6 +4,7 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 import { StateJurisdictionProvider } from './context/StateJurisdictionContext';
 import { DemoNoticeBanner } from './components/common/DemoNoticeBanner';
 import { Navbar } from './components/common/Navbar';
+import { ErrorBoundary } from './components/common/ErrorBoundary';
 
 // Step Gateways & Role Dashboards
 import { StateSelectionGateway } from './components/gateway/StateSelectionGateway';
@@ -49,46 +50,48 @@ export const MainApp: React.FC = () => {
 
       {/* 3. Dynamic Router Pages */}
       <main className="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6">
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/select-state" element={<StateSelectionGateway />} />
-          <Route path="/select-role" element={<RoleSelectionGateway />} />
-          <Route path="/login" element={<LoginPage />} />
-          
-          {/* Personalized Modular Role Dashboard */}
-          <Route path="/dashboard" element={<RoleDashboardRouter />} />
-          <Route path="/citizen" element={<RoleDashboardRouter />} />
-          <Route path="/legacy-dashboard" element={<DashboardPage />} />
-          
-          <Route path="/search" element={<SearchPage />} />
-          <Route path="/parcel/:ulpin" element={<UnifiedParcelPage />} />
-          
-          {/* Mutation Workflow */}
-          <Route path="/mutation" element={<MutationPage />} />
-          <Route path="/mutation/:id" element={<MutationPage />} />
+        <ErrorBoundary fallbackTitle="View Navigation Interruption">
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/select-state" element={<StateSelectionGateway />} />
+            <Route path="/select-role" element={<RoleSelectionGateway />} />
+            <Route path="/login" element={<LoginPage />} />
+            
+            {/* Personalized Modular Role Dashboard */}
+            <Route path="/dashboard" element={<RoleDashboardRouter />} />
+            <Route path="/citizen" element={<RoleDashboardRouter />} />
+            <Route path="/legacy-dashboard" element={<DashboardPage />} />
+            
+            <Route path="/search" element={<SearchPage />} />
+            <Route path="/parcel/:ulpin" element={<UnifiedParcelPage />} />
+            
+            {/* Mutation Workflow */}
+            <Route path="/mutation" element={<MutationPage />} />
+            <Route path="/mutation/:id" element={<MutationPage />} />
 
-          {/* Revenue Officer Adjudication Portal */}
-          <Route path="/officer" element={<OfficerDashboardPage />} />
-          <Route path="/officer/mutation/:id" element={<OfficerMutationReviewPage />} />
+            {/* Revenue Officer Adjudication Portal */}
+            <Route path="/officer" element={<OfficerDashboardPage />} />
+            <Route path="/officer/mutation/:id" element={<OfficerMutationReviewPage />} />
 
-          {/* Field Surveyor Studio (Offline PWA) */}
-          <Route path="/field" element={<FieldSurveyorPage />} />
+            {/* Field Surveyor Studio (Offline PWA) */}
+            <Route path="/field" element={<FieldSurveyorPage />} />
 
-          {/* AI Satellite Change Hub */}
-          <Route path="/change-alerts" element={<ChangeAlertsPage />} />
+            {/* AI Satellite Change Hub */}
+            <Route path="/change-alerts" element={<ChangeAlertsPage />} />
 
-          {/* Cryptographic SHA-256 Audit Ledger */}
-          <Route path="/audit" element={<AuditLedgerPage />} />
+            {/* Cryptographic SHA-256 Audit Ledger */}
+            <Route path="/audit" element={<AuditLedgerPage />} />
 
-          {/* Administration & Telemetry */}
-          <Route path="/admin" element={<AdminPage />} />
+            {/* Administration & Telemetry */}
+            <Route path="/admin" element={<AdminPage />} />
 
-          {/* SIH 2026 Competition Jury Demo Guide */}
-          <Route path="/demo-guide" element={<DemoGuidePage />} />
+            {/* SIH 2026 Competition Jury Demo Guide */}
+            <Route path="/demo-guide" element={<DemoGuidePage />} />
 
-          {/* Fallback route */}
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
+            {/* Fallback route */}
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </ErrorBoundary>
       </main>
 
       {/* Footer */}

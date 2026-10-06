@@ -19,6 +19,7 @@ export const MOCK_PARCELS_360: Record<string, any> = {
       area_discrepancy_pct: 0.01,
       land_use: 'AGRICULTURAL',
       status: 'CLEAN',
+      version: 1,
       boundary_geojson: {
         type: 'Polygon',
         coordinates: [
@@ -35,22 +36,46 @@ export const MOCK_PARCELS_360: Record<string, any> = {
     risk_assessment: {
       score: 12,
       category: 'LOW',
+      level: 'LOW',
       flags: [],
-      breakdown: { litigation: 0, encumbrance: 0, discrepancy: 0, churn: 12 },
+      breakdown: [
+        {
+          rule: 'LOW_RISK_BASELINE',
+          points: 12,
+          reason: 'Clean cadastral title verified with 0 active encumbrances and 0 pending litigations.',
+          evidence: { clean_title: true, active_encumbrances: 0, litigation_cases: 0 },
+          severity: 'LOW',
+        },
+      ],
+      factors: [
+        {
+          factor: 'LOW_RISK_BASELINE',
+          severity: 'LOW',
+          score: 12,
+          description: 'Clean cadastral title verified with 0 active encumbrances and 0 pending litigations.',
+          evidence: { clean_title: true },
+        },
+      ],
     },
     ownership: {
       current_owners: [
         {
+          id: 'own-ts-1-1',
           person_name: 'Ramesh Kumar',
           person_identifier: 'TS-PB-101-1',
+          ownership_percentage: 60.0,
           share_percentage: 0.6,
           ownership_type: 'PATTADAR_TITLE',
+          valid_from: '2018-05-12',
         },
         {
+          id: 'own-ts-1-2',
           person_name: 'P. Lakshmi Devi',
           person_identifier: 'TS-PB-101-2',
+          ownership_percentage: 40.0,
           share_percentage: 0.4,
           ownership_type: 'PATTADAR_TITLE',
+          valid_from: '2018-05-12',
         },
       ],
       previous_owners: [
@@ -63,13 +88,17 @@ export const MOCK_PARCELS_360: Record<string, any> = {
     },
     land_records: [
       {
+        id: 'lr-ts-1',
         record_type: 'PATTADAR_PASSBOOK',
         record_number: 'TS-PB-101-1',
+        source: 'Dharani Portal',
+        record_date: '2018-05-12',
         holder_info: {
           primary_holder: 'Ramesh Kumar',
           passbook_no: 'TS-PB-101-1',
           khata_number: 'KH-101',
         },
+        status: 'ACTIVE_RECORD',
         verified: true,
       },
     ],
@@ -81,11 +110,41 @@ export const MOCK_PARCELS_360: Record<string, any> = {
         document_number: 'DOC-2023-8891',
         buyer: 'Vanga Nishith Reddy',
         seller: 'Ramesh Kumar',
+        consideration_amount: 4500000,
+        registered_area_sqm: 14500,
         registration_date: '2024-02-15',
         sro_office: 'SRO Medchal',
       },
     ],
-    change_alerts: [],
+    mutation_applications: [
+      {
+        id: 'mut-app-1',
+        application_number: 'MUT-2026-0001',
+        status: 'AUTO_VALIDATED',
+        applicant: { name: 'Vanga Nishith Reddy', id_number: 'AADHAAR-8891-2309' },
+      },
+    ],
+    satellite_change_alerts: [],
+    field_observations: [],
+    legacy_mappings: [
+      {
+        id: 'leg-1',
+        legacy_system: 'Telangana Dharani',
+        legacy_identifier: 'TS-DHARANI-101-1',
+        confidence: 0.99,
+        status: 'MATCHED',
+      },
+    ],
+    audit_ledger: [
+      {
+        id: 'al-1',
+        action: 'GENESIS_PARCEL_MINT',
+        actor_id: 'SYSTEM_GENESIS_SEED',
+        prev_hash: '0000000000000000000000000000000000000000000000000000000000000000',
+        hash: 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
+        created_at: '2026-01-01T00:00:00Z',
+      },
+    ],
   },
 
   TSZQ5STGR65JMU: {
@@ -103,6 +162,7 @@ export const MOCK_PARCELS_360: Record<string, any> = {
       area_discrepancy_pct: 0.05,
       land_use: 'AGRICULTURAL',
       status: 'MORTGAGE',
+      version: 1,
       boundary_geojson: {
         type: 'Polygon',
         coordinates: [
@@ -119,45 +179,128 @@ export const MOCK_PARCELS_360: Record<string, any> = {
     risk_assessment: {
       score: 55,
       category: 'MEDIUM',
+      level: 'MEDIUM',
       flags: ['ACTIVE_BANK_MORTGAGE'],
-      breakdown: { litigation: 0, encumbrance: 40, discrepancy: 0, churn: 15 },
+      breakdown: [
+        {
+          rule: 'ACTIVE_BANK_MORTGAGE',
+          points: 40,
+          reason: 'Active agricultural term loan mortgage registered with State Bank of India (Kompally Branch)',
+          evidence: { institution: 'State Bank of India', amount: 2500000, reference: 'SBI-MORT-2023-881' },
+          severity: 'HIGH',
+        },
+        {
+          rule: 'CHURN_VELOCITY',
+          points: 15,
+          reason: 'Secondary registration index and ownership churn over past 24 months',
+          evidence: { churn_interval_months: 24 },
+          severity: 'MEDIUM',
+        },
+      ],
+      factors: [
+        {
+          factor: 'ACTIVE_BANK_MORTGAGE',
+          severity: 'HIGH',
+          score: 40,
+          description: 'Active agricultural term loan mortgage registered with State Bank of India (Kompally Branch)',
+          evidence: { institution: 'State Bank of India', amount: 2500000, reference: 'SBI-MORT-2023-881' },
+        },
+        {
+          factor: 'CHURN_VELOCITY',
+          severity: 'MEDIUM',
+          score: 15,
+          description: 'Secondary registration index and ownership churn over past 24 months',
+          evidence: { churn_interval_months: 24 },
+        },
+      ],
     },
     ownership: {
       current_owners: [
         {
+          id: 'own-ts-2',
           person_name: 'K. Venkat Reddy',
           person_identifier: 'TS-PB-102-2',
+          ownership_percentage: 100.0,
           share_percentage: 1.0,
           ownership_type: 'PATTADAR_TITLE',
+          valid_from: '2019-04-10',
         },
       ],
       previous_owners: [],
     },
     land_records: [
       {
+        id: 'lr-ts-2',
         record_type: 'PATTADAR_PASSBOOK',
         record_number: 'TS-PB-102-2',
+        source: 'Dharani Portal',
+        record_date: '2019-04-10',
         holder_info: {
           primary_holder: 'K. Venkat Reddy',
           passbook_no: 'TS-PB-102-2',
           khata_number: 'KH-102',
         },
+        status: 'ACTIVE_RECORD',
         verified: true,
       },
     ],
     encumbrances: [
       {
         id: 'enc-1',
+        type: 'AGRICULTURAL_TERM_LOAN_MORTGAGE',
+        encumbrance_type: 'AGRICULTURAL_TERM_LOAN_MORTGAGE',
+        status: 'ACTIVE_LIEN',
+        description: 'Agricultural term loan mortgage with State Bank of India (Kompally Branch)',
+        authority: 'State Bank of India (Kompally Branch)',
         financial_institution: 'State Bank of India (Kompally Branch)',
         amount: 2500000,
-        encumbrance_type: 'AGRICULTURAL_TERM_LOAN_MORTGAGE',
+        reference_number: 'SBI-MORT-2023-881',
+        start_date: '2023-08-10',
         registered_date: '2023-08-10',
-        status: 'ACTIVE_LIEN',
       },
     ],
     litigation: [],
-    registrations: [],
-    change_alerts: [],
+    registrations: [
+      {
+        id: 'reg-demo-2',
+        document_number: 'DOC-2021-4412',
+        seller: 'G. Satyanarayana',
+        buyer: 'K. Venkat Reddy',
+        consideration_amount: 3200000,
+        registered_area_sqm: 8200,
+        registration_date: '2021-03-22',
+        sro_office: 'SRO Medchal',
+      },
+    ],
+    mutation_applications: [
+      {
+        id: 'mut-app-mock-2',
+        application_number: 'MUT-2023-8190',
+        status: 'APPROVED',
+        applicant: { name: 'K. Venkat Reddy', id_number: 'AADHAAR-8190-1122' },
+      },
+    ],
+    satellite_change_alerts: [],
+    field_observations: [],
+    legacy_mappings: [
+      {
+        id: 'leg-2',
+        legacy_system: 'Telangana Dharani',
+        legacy_identifier: 'TS-DHARANI-102-2',
+        confidence: 0.99,
+        status: 'MATCHED',
+      },
+    ],
+    audit_ledger: [
+      {
+        id: 'al-2',
+        action: 'ENCUMBRANCE_RECORDED',
+        actor_id: 'SBI_BANK_PORTAL',
+        prev_hash: '0000000000000000000000000000000000000000000000000000000000000000',
+        hash: 'b1c3e5a7d9f24e6a8819024f0c9b78e234a5d6f1',
+        created_at: '2023-08-10T10:00:00Z',
+      },
+    ],
   },
 
   TSSMSR2Z03QTQD: {
@@ -175,6 +318,7 @@ export const MOCK_PARCELS_360: Record<string, any> = {
       area_discrepancy_pct: 0.12,
       land_use: 'RESIDENTIAL',
       status: 'STAY_ORDER',
+      version: 1,
       boundary_geojson: {
         type: 'Polygon',
         coordinates: [
@@ -191,29 +335,75 @@ export const MOCK_PARCELS_360: Record<string, any> = {
     risk_assessment: {
       score: 95,
       category: 'CRITICAL',
+      level: 'CRITICAL',
       flags: ['ACTIVE_JUDICIAL_STAY', 'CIVIL_COURT_INJUNCTION'],
-      breakdown: { litigation: 70, encumbrance: 0, discrepancy: 10, churn: 15 },
+      breakdown: [
+        {
+          rule: 'ACTIVE_JUDICIAL_STAY',
+          points: 70,
+          reason: 'Active judicial stay order issued by Court of Senior Civil Judge, Medchal (OS/2023/4412)',
+          evidence: { court: 'Court of Senior Civil Judge, Medchal', case: 'OS/2023/4412', order: 'Interim Status Quo Injunction' },
+          severity: 'CRITICAL',
+        },
+        {
+          rule: 'AREA_MISMATCH',
+          points: 10,
+          reason: 'Cadastral recorded area and geodesic polygon area discrepancy exceeds 0.1%',
+          evidence: { recorded: 12000, geodesic: 11985 },
+          severity: 'MEDIUM',
+        },
+        {
+          rule: 'CHURN_VELOCITY',
+          points: 15,
+          reason: 'Frequent succession/mutation filings within trailing observation period',
+          evidence: { filings_count: 2 },
+          severity: 'MEDIUM',
+        },
+      ],
+      factors: [
+        {
+          factor: 'ACTIVE_JUDICIAL_STAY',
+          severity: 'CRITICAL',
+          score: 70,
+          description: 'Active judicial stay order issued by Court of Senior Civil Judge, Medchal (OS/2023/4412)',
+          evidence: { court: 'Court of Senior Civil Judge, Medchal', case: 'OS/2023/4412' },
+        },
+        {
+          factor: 'AREA_MISMATCH',
+          severity: 'MEDIUM',
+          score: 10,
+          description: 'Cadastral recorded area and geodesic polygon area discrepancy exceeds 0.1%',
+          evidence: { recorded: 12000, geodesic: 11985 },
+        },
+      ],
     },
     ownership: {
       current_owners: [
         {
+          id: 'own-ts-3',
           person_name: 'Mohammed Abdul Kareem',
           person_identifier: 'TS-PB-103-1',
+          ownership_percentage: 100.0,
           share_percentage: 1.0,
           ownership_type: 'PATTADAR_TITLE',
+          valid_from: '2017-09-15',
         },
       ],
       previous_owners: [],
     },
     land_records: [
       {
+        id: 'lr-ts-3',
         record_type: 'PATTADAR_PASSBOOK',
         record_number: 'TS-PB-103-1',
+        source: 'Dharani Portal',
+        record_date: '2017-09-15',
         holder_info: {
           primary_holder: 'Mohammed Abdul Kareem',
           passbook_no: 'TS-PB-103-1',
           khata_number: 'KH-103',
         },
+        status: 'ACTIVE_RECORD',
         verified: true,
       },
     ],
@@ -222,16 +412,51 @@ export const MOCK_PARCELS_360: Record<string, any> = {
       {
         id: 'lit-1',
         case_number: 'OS/2023/4412',
+        case_type: 'ORIGINAL_CIVIL_SUIT',
+        court: 'Court of Senior Civil Judge, Medchal',
         court_name: 'Court of Senior Civil Judge, Medchal',
         petitioner: 'S. N. Rao & Others',
         respondent: 'Mohammed Abdul Kareem',
+        status: 'STAY_GRANTED',
+        stay_order: true,
         stay_order_active: true,
+        opened_at: '2023-11-04',
         stay_order_date: '2023-11-04',
+        description: 'Interim Status Quo Injunction restraining alienation, transfer, or title mutation.',
         prohibition_summary: 'Interim Status Quo Injunction restraining alienation or registration.',
       },
     ],
     registrations: [],
-    change_alerts: [],
+    mutation_applications: [
+      {
+        id: 'mut-app-2',
+        application_number: 'MUT-2026-0002',
+        status: 'BLOCKED',
+        applicant: { name: 'S. K. Verma', id_number: 'AADHAAR-9900-1122' },
+        blocked_reason: 'Active Court Stay (Case OS/2023/4412 in Senior Civil Judge Medchal). Automated governance restraint enforced.',
+      },
+    ],
+    satellite_change_alerts: [],
+    field_observations: [],
+    legacy_mappings: [
+      {
+        id: 'leg-3',
+        legacy_system: 'Telangana Dharani',
+        legacy_identifier: 'TS-DHARANI-103-1',
+        confidence: 0.98,
+        status: 'MATCHED',
+      },
+    ],
+    audit_ledger: [
+      {
+        id: 'al-3',
+        action: 'JUDICIAL_STAY_INJUNCTION_LOGGED',
+        actor_id: 'CIVIL_COURT_REGISTRY',
+        prev_hash: '0000000000000000000000000000000000000000000000000000000000000000',
+        hash: 'f9a8b7c6d5e43210123456789abcdef012345678',
+        created_at: '2023-11-04T14:30:00Z',
+      },
+    ],
   },
 
   KAQMWVSBJHWXC7: {
@@ -249,6 +474,7 @@ export const MOCK_PARCELS_360: Record<string, any> = {
       area_discrepancy_pct: 0.08,
       land_use: 'AGRICULTURAL',
       status: 'BHOOMI_RTC',
+      version: 1,
       boundary_geojson: {
         type: 'Polygon',
         coordinates: [
@@ -265,36 +491,107 @@ export const MOCK_PARCELS_360: Record<string, any> = {
     risk_assessment: {
       score: 18,
       category: 'LOW',
+      level: 'LOW',
       flags: [],
-      breakdown: { litigation: 0, encumbrance: 0, discrepancy: 8, churn: 10 },
+      breakdown: [
+        {
+          rule: 'BHOOMI_RTC_VERIFIED',
+          points: 10,
+          reason: 'Bhoomi RTC Extract cross-reference confirmed valid with revenue department registry',
+          evidence: { bhoomi_status: 'MATCHED', mr_number: 'MR/2023-4419' },
+          severity: 'LOW',
+        },
+        {
+          rule: 'AREA_MISMATCH',
+          points: 8,
+          reason: 'Calculated geodesic area is within 0.08% boundary variance',
+          evidence: { recorded: 9800, geodesic: 9792 },
+          severity: 'LOW',
+        },
+      ],
+      factors: [
+        {
+          factor: 'BHOOMI_RTC_VERIFIED',
+          severity: 'LOW',
+          score: 10,
+          description: 'Bhoomi RTC Extract cross-reference confirmed valid with revenue department registry',
+          evidence: { bhoomi_status: 'MATCHED' },
+        },
+      ],
     },
     ownership: {
       current_owners: [
         {
+          id: 'own-ka-1',
           person_name: 'Muniyappa Gowda',
           person_identifier: 'KA-RTC-87-1',
+          ownership_percentage: 100.0,
           share_percentage: 1.0,
           ownership_type: 'KHATEDAR_TITLE',
+          valid_from: '2020-01-15',
         },
       ],
       previous_owners: [],
     },
     land_records: [
       {
+        id: 'lr-ka-1',
         record_type: 'BHOOMI_RTC_EXTRACT',
         record_number: 'RTC-2024-87-1',
+        source: 'Karnataka Bhoomi Engine',
+        record_date: '2024-01-10',
         holder_info: {
           primary_holder: 'Muniyappa Gowda',
           khata_number: 'KH-KA-87',
           mr_number: 'MR/2023-4419',
         },
+        status: 'ACTIVE_RECORD',
         verified: true,
       },
     ],
     encumbrances: [],
     litigation: [],
-    registrations: [],
-    change_alerts: [],
+    registrations: [
+      {
+        id: 'reg-demo-ka-1',
+        document_number: 'KAVERI-2022-7711',
+        seller: 'B. Narayanappa',
+        buyer: 'Muniyappa Gowda',
+        consideration_amount: 5100000,
+        registered_area_sqm: 9800,
+        registration_date: '2022-11-19',
+        sro_office: 'SRO Devanahalli',
+      },
+    ],
+    mutation_applications: [
+      {
+        id: 'mut-app-4',
+        application_number: 'MUT-2026-0004',
+        status: 'OFFICER_REVIEW',
+        applicant: { name: 'Anand Kumar Jain', id_number: 'AADHAAR-7788-9900' },
+      },
+    ],
+    satellite_change_alerts: [],
+    field_observations: [],
+    legacy_mappings: [
+      {
+        id: 'leg-ka-1',
+        legacy_system: 'Karnataka Bhoomi',
+        legacy_identifier: 'KA-BHOOMI-87-1',
+        confidence: 0.99,
+        status: 'MATCHED',
+      },
+    ],
+    audit_ledger: [
+      {
+        id: 'al-ka-1',
+        action: 'BHOOMI_INTEGRATION_SYNC',
+        actor_id: 'BHOOMI_KAVERI_BRIDGE',
+        prev_hash: '0000000000000000000000000000000000000000000000000000000000000000',
+        hash: 'c2e4f6a8b0d2e4f6a8b0d2e4f6a8b0d2e4f6a8b0',
+        created_at: '2024-01-10T11:00:00Z',
+      },
+    ],
   },
 
   TSHUK8ZNXG7QVJ: {
@@ -312,6 +609,7 @@ export const MOCK_PARCELS_360: Record<string, any> = {
       area_discrepancy_pct: 0.12,
       land_use: 'AGRICULTURAL',
       status: 'AI_ALERT',
+      version: 1,
       boundary_geojson: {
         type: 'Polygon',
         coordinates: [
@@ -328,43 +626,332 @@ export const MOCK_PARCELS_360: Record<string, any> = {
     risk_assessment: {
       score: 45,
       category: 'MEDIUM',
+      level: 'MEDIUM',
       flags: ['SATELLITE_VEGETATION_LOSS_DETECTED'],
-      breakdown: { litigation: 0, encumbrance: 0, discrepancy: 10, churn: 35 },
+      breakdown: [
+        {
+          rule: 'SATELLITE_VEGETATION_LOSS',
+          points: 35,
+          reason: 'Sentinel-2 NDVI diff detected rapid tree canopy reduction and soil clearance on parcel perimeter',
+          evidence: { ndvi_drop: 0.38, confidence: 0.91, detected_date: '2024-06-16' },
+          severity: 'HIGH',
+        },
+        {
+          rule: 'AREA_MISMATCH',
+          points: 10,
+          reason: 'PostGIS geodesic calculation discrepancy with revenue survey records (0.12%)',
+          evidence: { recorded: 16000, geodesic: 15980 },
+          severity: 'LOW',
+        },
+      ],
+      factors: [
+        {
+          factor: 'SATELLITE_VEGETATION_LOSS',
+          severity: 'HIGH',
+          score: 35,
+          description: 'Sentinel-2 NDVI diff detected rapid tree canopy reduction and soil clearance on parcel perimeter',
+          evidence: { ndvi_drop: 0.38, confidence: 0.91 },
+        },
+      ],
     },
     ownership: {
       current_owners: [
         {
+          id: 'own-ts-4',
           person_name: 'Chandra Shekar Goud',
           person_identifier: 'TS-PB-104-3',
+          ownership_percentage: 100.0,
           share_percentage: 1.0,
           ownership_type: 'PATTADAR_TITLE',
+          valid_from: '2016-08-20',
         },
       ],
       previous_owners: [],
     },
     land_records: [
       {
+        id: 'lr-ts-4',
         record_type: 'PATTADAR_PASSBOOK',
         record_number: 'TS-PB-104-3',
+        source: 'Dharani Portal',
+        record_date: '2016-08-20',
         holder_info: {
           primary_holder: 'Chandra Shekar Goud',
           passbook_no: 'TS-PB-104-3',
           khata_number: 'KH-104',
         },
+        status: 'ACTIVE_RECORD',
         verified: true,
       },
     ],
     encumbrances: [],
     litigation: [],
     registrations: [],
-    change_alerts: [
+    satellite_change_alerts: [
       {
         id: 'alert-mock-1',
-        change_type: 'VEGETATION_LOSS',
-        confidence_score: 0.91,
-        severity: 'HIGH',
-        detected_at: '2024-06-16',
+        type: 'VEGETATION_LOSS',
+        confidence: 0.91,
+        detection_method: 'SENTINEL_2_NDVI_DIFF',
+        status: 'PENDING_VERIFICATION',
+        before_date: '2024-01-10',
+        after_date: '2024-06-16',
         description: 'Sentinel-2 NDVI diff detected rapid tree canopy reduction and soil clearance.',
+      },
+    ],
+    field_observations: [
+      {
+        id: 'field-obs-1',
+        observed_at: '2024-06-18',
+        observer_name: 'S. Prabhakar (Field Surveyor)',
+        findings: 'Perimeter tree felling observed; ground leveling underway.',
+      },
+    ],
+    mutation_applications: [
+      {
+        id: 'mut-app-3',
+        application_number: 'MUT-2026-0003',
+        status: 'FIELD_VERIFICATION',
+        applicant: { name: 'B. Srinivas', id_number: 'AADHAAR-5544-3322' },
+      },
+    ],
+    legacy_mappings: [
+      {
+        id: 'leg-4',
+        legacy_system: 'Telangana Dharani',
+        legacy_identifier: 'TS-DHARANI-104-3',
+        confidence: 0.97,
+        status: 'MATCHED',
+      },
+    ],
+    audit_ledger: [
+      {
+        id: 'al-4',
+        action: 'SATELLITE_ALERT_FLAGGED',
+        actor_id: 'AI_SENTINEL_PIPELINE',
+        prev_hash: '0000000000000000000000000000000000000000000000000000000000000000',
+        hash: 'e1d2c3b4a5f60718293a4b5c6d7e8f9012345678',
+        created_at: '2024-06-16T10:30:00Z',
+      },
+    ],
+  },
+
+  TS9NTJH8MYKGDE: {
+    parcel: {
+      id: 'mock-p-ts-5',
+      ulpin: 'TS9NTJH8MYKGDE',
+      state_code: 'TS',
+      state_name: 'Telangana',
+      legacy_survey_no: '105/2',
+      village: 'Medchal',
+      mandal: 'Medchal',
+      district: 'Medchal-Malkajgiri',
+      recorded_area_sqm: 11200,
+      geodesic_area_sqm: 11195.0,
+      area_discrepancy_pct: 0.04,
+      land_use: 'AGRICULTURAL',
+      status: 'CLEAN',
+      version: 1,
+      boundary_geojson: {
+        type: 'Polygon',
+        coordinates: [
+          [
+            [78.517, 17.585],
+            [78.5245, 17.585],
+            [78.5245, 17.5915],
+            [78.517, 17.5915],
+            [78.517, 17.585],
+          ],
+        ],
+      },
+    },
+    risk_assessment: {
+      score: 15,
+      category: 'LOW',
+      level: 'LOW',
+      flags: [],
+      breakdown: [
+        {
+          rule: 'LOW_RISK_BASELINE',
+          points: 15,
+          reason: 'Clean cadastral title with verified pattadar records.',
+          evidence: { verified: true },
+          severity: 'LOW',
+        },
+      ],
+      factors: [
+        {
+          factor: 'LOW_RISK_BASELINE',
+          severity: 'LOW',
+          score: 15,
+          description: 'Clean cadastral title with verified pattadar records.',
+          evidence: { verified: true },
+        },
+      ],
+    },
+    ownership: {
+      current_owners: [
+        {
+          id: 'own-ts-5',
+          person_name: 'K. S. Narayana Rao',
+          person_identifier: 'TS-PB-105-2',
+          ownership_percentage: 100.0,
+          share_percentage: 1.0,
+          ownership_type: 'PATTADAR_TITLE',
+          valid_from: '2015-03-11',
+        },
+      ],
+      previous_owners: [],
+    },
+    land_records: [
+      {
+        id: 'lr-ts-5',
+        record_type: 'PATTADAR_PASSBOOK',
+        record_number: 'TS-PB-105-2',
+        source: 'Dharani Portal',
+        record_date: '2015-03-11',
+        holder_info: {
+          primary_holder: 'K. S. Narayana Rao',
+          passbook_no: 'TS-PB-105-2',
+          khata_number: 'KH-105',
+        },
+        status: 'ACTIVE_RECORD',
+        verified: true,
+      },
+    ],
+    encumbrances: [],
+    litigation: [],
+    registrations: [],
+    mutation_applications: [],
+    satellite_change_alerts: [],
+    field_observations: [],
+    legacy_mappings: [
+      {
+        id: 'leg-5',
+        legacy_system: 'Telangana Dharani',
+        legacy_identifier: 'TS-DHARANI-105-2',
+        confidence: 0.99,
+        status: 'MATCHED',
+      },
+    ],
+    audit_ledger: [
+      {
+        id: 'al-5',
+        action: 'GENESIS_PARCEL_MINT',
+        actor_id: 'SYSTEM_GENESIS_SEED',
+        prev_hash: '0000000000000000000000000000000000000000000000000000000000000000',
+        hash: 'a7b8c9d0e1f2031425364758697a8b9c0d1e2f3a',
+        created_at: '2026-01-01T00:00:00Z',
+      },
+    ],
+  },
+
+  TS1EZQMU38RE38: {
+    parcel: {
+      id: 'mock-p-ts-6',
+      ulpin: 'TS1EZQMU38RE38',
+      state_code: 'TS',
+      state_name: 'Telangana',
+      legacy_survey_no: '106/2',
+      village: 'Medchal',
+      mandal: 'Medchal',
+      district: 'Medchal-Malkajgiri',
+      recorded_area_sqm: 8200,
+      geodesic_area_sqm: 8195.5,
+      area_discrepancy_pct: 0.05,
+      land_use: 'AGRICULTURAL',
+      status: 'CLEAN',
+      version: 1,
+      boundary_geojson: {
+        type: 'Polygon',
+        coordinates: [
+          [
+            [78.525, 17.585],
+            [78.532, 17.585],
+            [78.532, 17.5915],
+            [78.525, 17.5915],
+            [78.525, 17.585],
+          ],
+        ],
+      },
+    },
+    risk_assessment: {
+      score: 10,
+      category: 'LOW',
+      level: 'LOW',
+      flags: [],
+      breakdown: [
+        {
+          rule: 'LOW_RISK_BASELINE',
+          points: 10,
+          reason: 'Clean cadastral title with single pattadar ownership verified.',
+          evidence: { verified: true },
+          severity: 'LOW',
+        },
+      ],
+      factors: [
+        {
+          factor: 'LOW_RISK_BASELINE',
+          severity: 'LOW',
+          score: 10,
+          description: 'Clean cadastral title with single pattadar ownership verified.',
+          evidence: { verified: true },
+        },
+      ],
+    },
+    ownership: {
+      current_owners: [
+        {
+          id: 'own-ts-6',
+          person_name: 'Citizen Owner',
+          person_identifier: 'TS-PB-106-2',
+          ownership_percentage: 100.0,
+          share_percentage: 1.0,
+          ownership_type: 'PATTADAR_TITLE',
+          valid_from: '2020-04-18',
+        },
+      ],
+      previous_owners: [],
+    },
+    land_records: [
+      {
+        id: 'lr-ts-6',
+        record_type: 'PATTADAR_PASSBOOK',
+        record_number: 'TS-PB-106-2',
+        source: 'Dharani Portal',
+        record_date: '2020-04-18',
+        holder_info: {
+          primary_holder: 'Citizen Owner',
+          passbook_no: 'TS-PB-106-2',
+          khata_number: 'KH-106',
+        },
+        status: 'ACTIVE_RECORD',
+        verified: true,
+      },
+    ],
+    encumbrances: [],
+    litigation: [],
+    registrations: [],
+    mutation_applications: [],
+    satellite_change_alerts: [],
+    field_observations: [],
+    legacy_mappings: [
+      {
+        id: 'leg-6',
+        legacy_system: 'Telangana Dharani',
+        legacy_identifier: 'TS-DHARANI-106-2',
+        confidence: 0.99,
+        status: 'MATCHED',
+      },
+    ],
+    audit_ledger: [
+      {
+        id: 'al-6',
+        action: 'GENESIS_PARCEL_MINT',
+        actor_id: 'SYSTEM_GENESIS_SEED',
+        prev_hash: '0000000000000000000000000000000000000000000000000000000000000000',
+        hash: 'c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7',
+        created_at: '2026-01-01T00:00:00Z',
       },
     ],
   },
@@ -390,6 +977,7 @@ export function generateSyntheticParcelFallback(ulpin: string) {
       area_discrepancy_pct: 0.04,
       land_use: 'AGRICULTURAL',
       status: 'CLEAN',
+      version: 1,
       boundary_geojson: {
         type: 'Polygon',
         coordinates: [
@@ -406,35 +994,81 @@ export function generateSyntheticParcelFallback(ulpin: string) {
     risk_assessment: {
       score: 15,
       category: 'LOW',
+      level: 'LOW',
       flags: [],
-      breakdown: { litigation: 0, encumbrance: 0, discrepancy: 0, churn: 15 },
+      breakdown: [
+        {
+          rule: 'SYNTHETIC_VERIFIED',
+          points: 15,
+          reason: 'Synthetic parcel baseline verification pass.',
+          evidence: { verified: true },
+          severity: 'LOW',
+        },
+      ],
+      factors: [
+        {
+          factor: 'SYNTHETIC_VERIFIED',
+          severity: 'LOW',
+          score: 15,
+          description: 'Synthetic parcel baseline verification pass.',
+          evidence: { verified: true },
+        },
+      ],
     },
     ownership: {
       current_owners: [
         {
+          id: `own-${ulpin}`,
           person_name: 'Verified Landowner',
           person_identifier: `${isKa ? 'KA-RTC' : 'TS-PB'}-105-1`,
+          ownership_percentage: 100.0,
           share_percentage: 1.0,
           ownership_type: isKa ? 'KHATEDAR_TITLE' : 'PATTADAR_TITLE',
+          valid_from: '2020-01-01',
         },
       ],
       previous_owners: [],
     },
     land_records: [
       {
+        id: `lr-${ulpin}`,
         record_type: isKa ? 'BHOOMI_RTC_EXTRACT' : 'PATTADAR_PASSBOOK',
         record_number: `${isKa ? 'KA-RTC' : 'TS-PB'}-105-1`,
+        source: isKa ? 'Karnataka Bhoomi Engine' : 'Telangana Dharani Portal',
+        record_date: '2020-01-01',
         holder_info: {
           primary_holder: 'Verified Landowner',
           khata_number: 'KH-105',
         },
+        status: 'ACTIVE_RECORD',
         verified: true,
       },
     ],
     encumbrances: [],
     litigation: [],
     registrations: [],
-    change_alerts: [],
+    mutation_applications: [],
+    satellite_change_alerts: [],
+    field_observations: [],
+    legacy_mappings: [
+      {
+        id: `leg-${ulpin}`,
+        legacy_system: isKa ? 'Karnataka Bhoomi' : 'Telangana Dharani',
+        legacy_identifier: `${isKa ? 'KA-BHOOMI' : 'TS-DHARANI'}-105-1`,
+        confidence: 0.98,
+        status: 'MATCHED',
+      },
+    ],
+    audit_ledger: [
+      {
+        id: `al-${ulpin}`,
+        action: 'GENESIS_PARCEL_MINT',
+        actor_id: 'SYSTEM_GENESIS_SEED',
+        prev_hash: '0000000000000000000000000000000000000000000000000000000000000000',
+        hash: 'd4e5f6a7b8c9...genesis',
+        created_at: '2026-01-01T00:00:00Z',
+      },
+    ],
   };
 }
 
@@ -469,13 +1103,24 @@ export const MOCK_CHANGE_ALERTS = [
     ulpin: 'TSHUK8ZNXG7QVJ',
     legacy_survey_no: '104/3',
     village: 'Dulapally',
+    mandal: 'Dundigal Gandimaisamma',
+    district: 'Medchal-Malkajgiri',
+    type: 'VEGETATION_LOSS',
     change_type: 'VEGETATION_LOSS',
+    status: 'PENDING_VERIFICATION',
     alert_status: 'PENDING_VERIFICATION',
+    confidence: 0.91,
     confidence_score: 0.91,
     ndvi_drop: 0.38,
     ndbi_surge: 0.12,
+    before_date: '2024-01-10',
+    after_date: '2024-06-16',
     detected_at: '2024-06-16T10:30:00Z',
+    detection_method: 'SENTINEL_2_NDVI_DIFF',
     severity: 'HIGH',
+    cloud_pct: 3.5,
+    area_sqm: 16000,
+    affected_area_sqm: 3200,
     description: 'Significant reduction in vegetative cover detected on boundary perimeter.',
   },
   {
@@ -483,13 +1128,24 @@ export const MOCK_CHANGE_ALERTS = [
     ulpin: 'TS1EZQMU38RE38',
     legacy_survey_no: '106/2',
     village: 'Medchal',
+    mandal: 'Medchal',
+    district: 'Medchal-Malkajgiri',
+    type: 'NEW_CONSTRUCTION',
     change_type: 'NEW_CONSTRUCTION',
+    status: 'FIELD_DISPATCHED',
     alert_status: 'FIELD_DISPATCHED',
+    confidence: 0.84,
     confidence_score: 0.84,
     ndvi_drop: 0.15,
     ndbi_surge: 0.42,
+    before_date: '2024-01-15',
+    after_date: '2024-06-18',
     detected_at: '2024-06-18T14:15:00Z',
+    detection_method: 'SENTINEL_2_NDBI_DIFF',
     severity: 'MEDIUM',
+    cloud_pct: 1.8,
+    area_sqm: 8200,
+    affected_area_sqm: 1200,
     description: 'Rapid increase in built-up spectral index indicating unauthorized structure foundation.',
   },
 ];
@@ -504,6 +1160,7 @@ export const MOCK_MUTATIONS_LIST = [
     applicant: { name: 'Vanga Nishith Reddy', id_number: 'AADHAAR-8891-2309' },
     risk_score: 12,
     status: 'AUTO_VALIDATED',
+    version: 1,
     submitted_at: '2026-02-10T09:30:00Z',
   },
   {
@@ -515,7 +1172,8 @@ export const MOCK_MUTATIONS_LIST = [
     applicant: { name: 'S. K. Verma', id_number: 'AADHAAR-9900-1122' },
     risk_score: 95,
     status: 'BLOCKED',
-    blocked_reason: 'Active Court Stay (Case OS/2023/4412 in Senior Civil Judge Medchal).',
+    version: 1,
+    blocked_reason: 'Active Court Stay (Case OS/2023/4412 in Senior Civil Judge Medchal). Automatic restraint enforced.',
     submitted_at: '2026-02-11T11:45:00Z',
   },
   {
@@ -527,6 +1185,7 @@ export const MOCK_MUTATIONS_LIST = [
     applicant: { name: 'B. Srinivas', id_number: 'AADHAAR-5544-3322' },
     risk_score: 45,
     status: 'FIELD_VERIFICATION',
+    version: 1,
     submitted_at: '2026-02-12T14:20:00Z',
   },
   {
@@ -538,36 +1197,58 @@ export const MOCK_MUTATIONS_LIST = [
     applicant: { name: 'Anand Kumar Jain', id_number: 'AADHAAR-7788-9900' },
     risk_score: 18,
     status: 'OFFICER_REVIEW',
+    version: 1,
     submitted_at: '2026-02-13T16:00:00Z',
   },
 ];
 
 export const MOCK_AUDIT_LEDGER = [
   {
+    id: 'al-block-0',
     block_index: 0,
     event_type: 'GENESIS_PARCEL_MINT',
+    action: 'GENESIS_PARCEL_MINT',
+    entity_type: 'PARCEL',
     target_ulpin: 'TSQXY9QM4KNXSZ',
     actor: 'SYSTEM_GENESIS_SEED',
+    actor_id: 'SYSTEM_GENESIS_SEED',
     current_hash: 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
+    hash: 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
     previous_hash: '0000000000000000000000000000000000000000000000000000000000000000',
+    prev_hash: '0000000000000000000000000000000000000000000000000000000000000000',
     created_at: '2026-01-01T00:00:00Z',
+    payload_json: { target_ulpin: 'TSQXY9QM4KNXSZ', block: 0, state: 'TS' },
   },
   {
+    id: 'al-block-1',
     block_index: 1,
     event_type: 'DEED_REGISTRATION_LINKAGE',
+    action: 'DEED_REGISTRATION_LINKAGE',
+    entity_type: 'PARCEL',
     target_ulpin: 'TSQXY9QM4KNXSZ',
     actor: 'SRO_MEDCHAL_ADAPTER',
+    actor_id: 'SRO_MEDCHAL_ADAPTER',
     current_hash: '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08',
+    hash: '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08',
     previous_hash: 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
+    prev_hash: 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
     created_at: '2026-02-10T09:30:00Z',
+    payload_json: { target_ulpin: 'TSQXY9QM4KNXSZ', deed_id: 'DOC-2023-8891' },
   },
   {
+    id: 'al-block-2',
     block_index: 2,
     event_type: 'MUTATION_AUTO_VALIDATE',
+    action: 'MUTATION_AUTO_VALIDATE',
+    entity_type: 'MUTATION_APPLICATION',
     target_ulpin: 'TSQXY9QM4KNXSZ',
     actor: 'RULE_ENGINE_VALIDATOR',
+    actor_id: 'RULE_ENGINE_VALIDATOR',
     current_hash: 'a4f89d8174e98f729b47e8e9cd81e6a17b88ec6e1f0e8f8b89e3a7a9d0f2b3e4',
+    hash: 'a4f89d8174e98f729b47e8e9cd81e6a17b88ec6e1f0e8f8b89e3a7a9d0f2b3e4',
     previous_hash: '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08',
+    prev_hash: '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08',
     created_at: '2026-02-10T09:31:00Z',
+    payload_json: { target_ulpin: 'TSQXY9QM4KNXSZ', mutation_id: 'MUT-2026-0001', status: 'AUTO_VALIDATED' },
   },
 ];
