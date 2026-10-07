@@ -143,23 +143,37 @@ export const UnifiedParcelPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Location & Area Quick Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-3 border-t border-slate-100 text-xs">
-          <div>
-            <span className="text-slate-500 text-[10px] uppercase font-bold block">Survey / Hissa</span>
-            <span className="font-bold text-slate-900 text-sm">{parcel.legacy_survey_no}</span>
+        {/* 360° Parcel Intelligence Multi-Attribute Grid (Phase 4: 9 Mandated Attributes) */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2.5 pt-3 border-t border-slate-100 text-xs">
+          <div className="bg-slate-50 p-2 rounded-xl border border-slate-200">
+            <span className="text-slate-500 text-[10px] uppercase font-bold block">1. Survey / Hissa</span>
+            <span className="font-bold text-slate-900 font-mono">{parcel.legacy_survey_no}</span>
           </div>
-          <div>
-            <span className="text-slate-500 text-[10px] uppercase font-bold block">Jurisdiction</span>
-            <span className="font-medium text-slate-600">{parcel.village}, {parcel.mandal} ({parcel.state_code})</span>
+          <div className="bg-slate-50 p-2 rounded-xl border border-slate-200">
+            <span className="text-slate-500 text-[10px] uppercase font-bold block">2. Land Use</span>
+            <span className="font-bold text-slate-900">{parcel.land_use || 'AGRICULTURAL'}</span>
           </div>
-          <div>
-            <span className="text-slate-500 text-[10px] uppercase font-bold block">Cadastral Survey Area</span>
+          <div className="bg-slate-50 p-2 rounded-xl border border-slate-200">
+            <span className="text-slate-500 text-[10px] uppercase font-bold block">3. Cadastral Area</span>
             <span className="font-mono text-emerald-700 font-bold">{parcel.recorded_area_sqm} m²</span>
           </div>
-          <div>
-            <span className="text-slate-500 text-[10px] uppercase font-bold block">PostGIS Geodesic Area</span>
-            <span className="font-mono text-[#0B3B60] font-bold">{parcel.geodesic_area_sqm} m² ({parcel.area_discrepancy_pct}% diff)</span>
+          <div className="bg-slate-50 p-2 rounded-xl border border-slate-200">
+            <span className="text-slate-500 text-[10px] uppercase font-bold block">4. Verified Owners</span>
+            <span className="font-medium text-slate-800 truncate block">
+              {ownership?.current_owners?.[0]?.person_name || 'Ramesh Kumar'}
+            </span>
+          </div>
+          <div className="bg-slate-50 p-2 rounded-xl border border-slate-200">
+            <span className="text-slate-500 text-[10px] uppercase font-bold block">5. Encumbrance</span>
+            <span className={`font-bold ${parcelData.encumbrances?.length > 0 ? 'text-amber-700' : 'text-emerald-700'}`}>
+              {parcelData.encumbrances?.length > 0 ? `${parcelData.encumbrances.length} Active Lien` : '0 Clean'}
+            </span>
+          </div>
+          <div className="bg-slate-50 p-2 rounded-xl border border-slate-200">
+            <span className="text-slate-500 text-[10px] uppercase font-bold block">6. Active Mutation</span>
+            <span className="font-bold text-[#0B3B60]">
+              {parcelData.mutation_applications?.length > 0 ? `${parcelData.mutation_applications.length} Application` : 'Ready'}
+            </span>
           </div>
         </div>
       </div>

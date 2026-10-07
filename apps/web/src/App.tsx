@@ -10,6 +10,7 @@ import { ErrorBoundary } from './components/common/ErrorBoundary';
 import { StateSelectionGateway } from './components/gateway/StateSelectionGateway';
 import { RoleSelectionGateway } from './components/gateway/RoleSelectionGateway';
 import { RoleDashboardRouter } from './pages/dashboards/RoleDashboardRouter';
+import { DemoTourNavigator } from './components/common/DemoTourNavigator';
 
 // Page Views
 import { LandingPage } from './pages/LandingPage';
@@ -93,6 +94,9 @@ export const MainApp: React.FC = () => {
           </Routes>
         </ErrorBoundary>
       </main>
+ 
+      {/* 4. SIH 2026 Evaluation Demo Tour Navigator */}
+      <DemoTourNavigator />
 
       {/* Government of India Official Portal Footer */}
       <footer className="border-t-2 border-slate-200 bg-white text-slate-600 mt-auto">

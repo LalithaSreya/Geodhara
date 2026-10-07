@@ -63,6 +63,30 @@ export const FieldSurveyorDashboardView: React.FC = () => {
           </div>
         </div>
 
+        {/* 4 Mandated KPI Cards (Phase 3) */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
+          <div className="bg-slate-50 border border-slate-200 p-3 rounded-xl shadow-xs text-center">
+            <span className="text-[10px] font-bold text-slate-500 uppercase block">Assigned Parcels</span>
+            <span className="text-xl font-bold font-mono text-slate-900">3 Parcels</span>
+            <span className="text-[10px] text-slate-500 block">Medchal Survey Zone</span>
+          </div>
+          <div className="bg-amber-50/70 border border-amber-200 p-3 rounded-xl shadow-xs text-center">
+            <span className="text-[10px] font-bold text-amber-800 uppercase block">Inspection Tasks</span>
+            <span className="text-xl font-bold font-mono text-amber-700">2 Active</span>
+            <span className="text-[10px] text-amber-700 block">Ground Verification Req</span>
+          </div>
+          <div className="bg-blue-50/70 border border-blue-200 p-3 rounded-xl shadow-xs text-center">
+            <span className="text-[10px] font-bold text-[#0B3B60] uppercase block">Offline Queue</span>
+            <span className="text-xl font-bold font-mono text-[#0B3B60]">IndexedDB</span>
+            <span className="text-[10px] text-slate-500 block">Local Device Storage</span>
+          </div>
+          <div className="bg-emerald-50/70 border border-emerald-200 p-3 rounded-xl shadow-xs text-center">
+            <span className="text-[10px] font-bold text-emerald-800 uppercase block">Sync Status</span>
+            <span className="text-xl font-bold font-mono text-emerald-700">{isOnline ? 'ONLINE' : 'CACHED'}</span>
+            <span className="text-[10px] text-emerald-700 block">Auto-Sync on Connect</span>
+          </div>
+        </div>
+
         <p className="text-xs text-slate-600 leading-relaxed">
           This studio is an offline-capable Progressive Web Application (PWA). You can record GPS ground observations, snap geotagged photo evidence, and inspect physical boundaries in remote rural tracts without cellular connectivity.
         </p>

@@ -14,7 +14,8 @@ import {
   RotateCcw,
   Sparkles,
   CheckCircle2,
-  LayoutDashboard
+  LayoutDashboard,
+  Play
 } from 'lucide-react';
 
 export const Navbar: React.FC = () => {
@@ -222,10 +223,20 @@ export const Navbar: React.FC = () => {
             )}
           </div>
 
+          {/* Start Demo Button (Phase 11 Requirement) */}
+          <Link
+            to="/select-state"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-amber-400 hover:bg-amber-300 text-[#0B3B60] shadow-xs transition"
+            title="Start SIH 2026 Evaluation 2-Minute Demonstration Flow"
+          >
+            <Play className="w-3.5 h-3.5 fill-[#0B3B60]" />
+            <span>Start Demo</span>
+          </Link>
+
           {/* Quick Setup Wizard Button */}
           <Link
             to="/select-state"
-            className="hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-amber-400 hover:bg-amber-300 text-[#0B3B60] shadow-xs transition"
+            className="hidden xl:flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-white/10 hover:bg-white/20 text-white border border-white/20 shadow-xs transition"
             title="Launch 2-step setup wizard"
           >
             <Sparkles className="w-3.5 h-3.5" />

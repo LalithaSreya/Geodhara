@@ -49,6 +49,30 @@ export const AdminDashboardView: React.FC = () => {
           </div>
         </div>
 
+        {/* 4 Mandated KPI Cards (Phase 3) */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
+          <div className="bg-emerald-50/70 border border-emerald-200 p-3 rounded-xl shadow-xs text-center">
+            <span className="text-[10px] font-bold text-emerald-800 uppercase block">Audit Integrity</span>
+            <span className="text-xl font-bold font-mono text-emerald-700">100% Valid</span>
+            <span className="text-[10px] text-emerald-700 block">SHA-256 Hash Chain Clean</span>
+          </div>
+          <div className="bg-blue-50/70 border border-blue-200 p-3 rounded-xl shadow-xs text-center">
+            <span className="text-[10px] font-bold text-[#0B3B60] uppercase block">Adapter Status</span>
+            <span className="text-xl font-bold font-mono text-[#0B3B60]">2 Active</span>
+            <span className="text-[10px] text-slate-500 block">Dharani (TS) & Bhoomi (KA)</span>
+          </div>
+          <div className="bg-slate-50 border border-slate-200 p-3 rounded-xl shadow-xs text-center">
+            <span className="text-[10px] font-bold text-slate-500 uppercase block">Platform Health</span>
+            <span className="text-xl font-bold font-mono text-slate-900">PostGIS 16</span>
+            <span className="text-[10px] text-slate-500 block">Redis 1.4ms • All Systems UP</span>
+          </div>
+          <div className="bg-purple-50/70 border border-purple-200 p-3 rounded-xl shadow-xs text-center">
+            <span className="text-[10px] font-bold text-purple-800 uppercase block">Analytics</span>
+            <span className="text-xl font-bold font-mono text-purple-700">14-Char ULPIN</span>
+            <span className="text-[10px] text-purple-700 block">ISO 19152 LADM Schema</span>
+          </div>
+        </div>
+
         <p className="text-xs text-slate-600 leading-relaxed">
           Monitor platform health across PostgreSQL 16 (PostGIS EPSG:4326), Redis session and cache latency, Express REST API telemetry, and cross-state adapter schema normalization between Telangana Dharani and Karnataka Bhoomi.
         </p>

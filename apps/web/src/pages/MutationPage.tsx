@@ -150,22 +150,53 @@ export const MutationPage: React.FC = () => {
             </div>
           )}
 
-          <div className="flex flex-wrap items-center gap-3 pt-4 border-t border-slate-100">
+          {/* Visual Workflow Timeline (Phase 5 Requirement) */}
+          <div className="space-y-2 pt-2 border-t border-slate-100">
+            <span className="text-[11px] font-bold text-slate-700 uppercase tracking-wider block">
+              Statutory Workflow Progression Timeline:
+            </span>
+            <div className="grid grid-cols-4 gap-2 text-center text-xs">
+              <div className="p-2.5 rounded-xl bg-emerald-100 text-emerald-800 border border-emerald-300 font-bold">
+                ✓ 1. SUBMITTED
+              </div>
+              <div className="p-2.5 rounded-xl bg-emerald-600 text-white font-bold shadow-xs">
+                ✓ 2. AUTO VALIDATED
+              </div>
+              <div className="p-2.5 rounded-xl bg-blue-50 text-[#0B3B60] border border-blue-200 font-semibold animate-pulse">
+                ⏳ 3. OFFICER REVIEW
+              </div>
+              <div className="p-2.5 rounded-xl bg-slate-100 text-slate-400 border border-slate-200 font-medium">
+                ○ 4. APPROVED
+              </div>
+            </div>
+          </div>
+
+          <div className="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-slate-100">
+            <div className="flex items-center gap-2">
+              <Link
+                to={`/parcel/${selectedParcel.parcel.ulpin}`}
+                className="px-4 py-2.5 bg-white hover:bg-slate-50 text-slate-700 font-bold text-xs rounded-xl border border-slate-300 shadow-sm transition"
+              >
+                View 360° Parcel Record
+              </Link>
+              <button
+                onClick={() => {
+                  setSubmittedApp(null);
+                  setUlpinInput('TSQXY9QM4KNXSZ');
+                }}
+                className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs rounded-xl transition"
+              >
+                Submit Another Application
+              </button>
+            </div>
+
             <Link
-              to={`/parcel/${selectedParcel.parcel.ulpin}`}
-              className="px-4 py-2.5 bg-[#0B3B60] hover:bg-[#07263F] text-white font-bold text-xs rounded-xl shadow-sm transition"
+              to={`/officer/mutation/${submittedApp.id}`}
+              className="px-5 py-2.5 bg-[#0B3B60] hover:bg-[#07263F] text-white font-bold text-xs rounded-xl shadow-sm transition flex items-center gap-2"
             >
-              View 360° Parcel Record
+              <span>Proceed to Officer Review Cockpit</span>
+              <ArrowRight className="w-4 h-4" />
             </Link>
-            <button
-              onClick={() => {
-                setSubmittedApp(null);
-                setUlpinInput('TSQXY9QM4KNXSZ');
-              }}
-              className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs rounded-xl transition"
-            >
-              Submit Another Application
-            </button>
           </div>
         </div>
       )}

@@ -222,9 +222,18 @@ export const OfficerMutationReviewPage: React.FC = () => {
         </div>
 
         {actionSuccess && (
-          <div className="p-4 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-800 text-xs flex items-center gap-2">
-            <CheckCircle2 className="w-5 h-5 shrink-0 text-emerald-600" />
-            <span>{actionSuccess}</span>
+          <div className="p-4 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-800 text-xs flex flex-wrap items-center justify-between gap-3">
+            <div className="flex items-center gap-2">
+              <CheckCircle2 className="w-5 h-5 shrink-0 text-emerald-600" />
+              <span className="font-semibold">{actionSuccess}</span>
+            </div>
+            <Link
+              to="/audit"
+              className="px-4 py-1.5 bg-[#0B3B60] hover:bg-[#07263F] text-white rounded-lg font-bold text-xs shadow-xs transition flex items-center gap-1.5"
+            >
+              <Lock className="w-3.5 h-3.5 text-emerald-400" />
+              <span>Verify Cryptographic Audit Ledger →</span>
+            </Link>
           </div>
         )}
 

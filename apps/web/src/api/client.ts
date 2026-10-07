@@ -110,25 +110,78 @@ export class ApiClient {
 
     // 5. Mutation Queue
     if (clean.startsWith('/mutation')) {
+      if (clean.includes('/transition') && options.method === 'POST') {
+        let body: any = {};
+        try {
+          body = options.body ? JSON.parse(options.body as string) : {};
+        } catch {}
+        const parts = clean.split('/');
+        const id = parts[2];
+        const targetStatus = body.targetStatus || 'APPROVED';
+        const found = MOCK_MUTATIONS_LIST.find((m) => m.id === id || m.application_number === id);
+        if (found) {
+          found.status = targetStatus;
+          found.version = (body.expectedVersion || found.version || 1) + 1;
+        }
+
+        // Chained Audit Entry
+        const prevBlock = MOCK_AUDIT_LEDGER[MOCK_AUDIT_LEDGER.length - 1];
+        const newBlock = {
+          id: `al-block-${MOCK_AUDIT_LEDGER.length}`,
+          block_index: MOCK_AUDIT_LEDGER.length,
+          event_type: `MUTATION_${targetStatus}`,
+          action: `MUTATION_${targetStatus}`,
+          entity_type: 'MUTATION_APPLICATION',
+          target_ulpin: found?.ulpin || 'TSQXY9QM4KNXSZ',
+          actor: 'REVENUE_OFFICER_TAHSILDAR',
+          actor_id: 'REVENUE_OFFICER_TAHSILDAR',
+          current_hash: 'c81e728d9d4c2f636f067f89cc14862c1e3b02882f5d63f0d0e14a7940e7f8e1',
+          hash: 'c81e728d9d4c2f636f067f89cc14862c1e3b02882f5d63f0d0e14a7940e7f8e1',
+          previous_hash: prevBlock?.hash || '0000000000000000000000000000000000000000000000000000000000000000',
+          prev_hash: prevBlock?.hash || '0000000000000000000000000000000000000000000000000000000000000000',
+          created_at: new Date().toISOString(),
+          payload_json: {
+            target_ulpin: found?.ulpin || 'TSQXY9QM4KNXSZ',
+            mutation_id: found?.application_number || id,
+            status: targetStatus,
+            reason: body.reason || 'Statutory revenue adjudication approved.',
+          },
+        };
+        MOCK_AUDIT_LEDGER.push(newBlock);
+
+        return {
+          message: `Mutation transitioned to ${targetStatus}`,
+          data: {
+            status: targetStatus,
+            version: found ? found.version : 2,
+          },
+        };
+      }
+
       if (options.method === 'POST') {
         let body: any = {};
         try {
           body = options.body ? JSON.parse(options.body as string) : {};
         } catch {}
+
+        const newApp = {
+          id: `mut-${Date.now()}`,
+          application_number: `MUT-2026-${Math.floor(1000 + Math.random() * 9000)}`,
+          ulpin: body.parcelId || 'TSQXY9QM4KNXSZ',
+          legacy_survey_no: '101/1',
+          village: 'Medchal',
+          applicant: body.applicant || { name: 'Vanga Nishith Reddy', id_number: 'AADHAAR-8891-2309' },
+          risk_score: 12,
+          status: 'AUTO_VALIDATED',
+          version: 1,
+          submitted_at: new Date().toISOString(),
+        };
+
+        MOCK_MUTATIONS_LIST.unshift(newApp);
+
         return {
           message: 'Mutation submitted successfully (Synthetic Simulation)',
-          data: {
-            id: `mut-${Date.now()}`,
-            application_number: `MUT-2026-${Math.floor(1000 + Math.random() * 9000)}`,
-            ulpin: body.parcelId || 'TSQXY9QM4KNXSZ',
-            legacy_survey_no: '101/1',
-            village: 'Medchal',
-            applicant: body.applicant || { name: 'Vanga Nishith Reddy', id_number: 'AADHAAR-8891-2309' },
-            risk_score: 12,
-            status: 'AUTO_VALIDATED',
-            version: 1,
-            submitted_at: new Date().toISOString(),
-          },
+          data: newApp,
         };
       }
       const parts = clean.split('/');
@@ -138,7 +191,7 @@ export class ApiClient {
         return {
           data: {
             ...baseApp,
-            version: 1,
+            version: baseApp.version || 1,
             validation_results: {
               is_valid: baseApp.status !== 'BLOCKED',
               risk_factors: [

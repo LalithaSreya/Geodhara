@@ -19,7 +19,8 @@ import {
   ShieldCheck,
   Lock,
   Cloud,
-  FileText
+  FileText,
+  Smartphone
 } from 'lucide-react';
 
 export const ChangeAlertsPage: React.FC = () => {
@@ -306,8 +307,16 @@ export const ChangeAlertsPage: React.FC = () => {
                   onClick={() => handleOpenAlertDetails(alert)}
                   className="flex-1 bg-[#0B3B60] hover:bg-[#07263F] text-white text-xs font-semibold py-2 rounded-xl transition flex items-center justify-center gap-1.5 cursor-pointer shadow-sm"
                 >
-                  <Eye className="w-3.5 h-3.5" /> Inspect Differencing
+                  <Eye className="w-3.5 h-3.5" /> Inspect Diff
                 </button>
+                <Link
+                  to={`/field?ulpin=${alert.ulpin}`}
+                  className="px-3 py-2 bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200 text-xs font-semibold rounded-xl transition flex items-center gap-1 shadow-2xs"
+                  title="Dispatch ground truth verification survey"
+                >
+                  <Smartphone className="w-3.5 h-3.5 text-amber-700" />
+                  <span>Field Survey</span>
+                </Link>
               </div>
             </div>
           );
@@ -441,22 +450,31 @@ export const ChangeAlertsPage: React.FC = () => {
                 className="w-full bg-white border border-slate-300 rounded-xl p-3 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-[#0B3B60]"
               />
 
-              <div className="flex items-center justify-end gap-3 pt-1">
-                <button
-                  disabled={actionLoading}
-                  onClick={() => handleAdjudicate('DISMISS')}
-                  className="bg-slate-200 hover:bg-slate-300 text-slate-800 text-xs font-semibold px-4 py-2 rounded-xl transition flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+              <div className="flex flex-wrap items-center justify-between gap-3 pt-1">
+                <Link
+                  to={`/field?ulpin=${selectedAlert.ulpin}`}
+                  className="bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200 text-xs font-semibold px-4 py-2 rounded-xl transition flex items-center gap-1.5 shadow-2xs"
                 >
-                  <XCircle className="w-3.5 h-3.5 text-slate-600" /> Dismiss / Permitted Work
-                </button>
+                  <Smartphone className="w-3.5 h-3.5 text-amber-700" /> Dispatch Ground Surveyor
+                </Link>
 
-                <button
-                  disabled={actionLoading}
-                  onClick={() => handleAdjudicate('VERIFY')}
-                  className="bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold px-4 py-2 rounded-xl shadow-sm transition flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
-                >
-                  <CheckCircle2 className="w-3.5 h-3.5" /> Confirm Ground Infraction (Flag Risk)
-                </button>
+                <div className="flex items-center gap-3">
+                  <button
+                    disabled={actionLoading}
+                    onClick={() => handleAdjudicate('DISMISS')}
+                    className="bg-slate-200 hover:bg-slate-300 text-slate-800 text-xs font-semibold px-4 py-2 rounded-xl transition flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                  >
+                    <XCircle className="w-3.5 h-3.5 text-slate-600" /> Dismiss / Permitted Work
+                  </button>
+
+                  <button
+                    disabled={actionLoading}
+                    onClick={() => handleAdjudicate('VERIFY')}
+                    className="bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold px-4 py-2 rounded-xl shadow-sm transition flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                  >
+                    <CheckCircle2 className="w-3.5 h-3.5" /> Confirm Ground Infraction (Flag Risk)
+                  </button>
+                </div>
               </div>
             </div>
           </div>

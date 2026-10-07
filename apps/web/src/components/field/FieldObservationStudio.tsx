@@ -46,6 +46,14 @@ export const FieldObservationStudio: React.FC = () => {
   useEffect(() => {
     loadData();
 
+    // Check URL query param for directed field surveys
+    const params = new URLSearchParams(window.location.search);
+    const qUlpin = params.get('ulpin');
+    if (qUlpin) {
+      setTargetUlpin(qUlpin.trim().toUpperCase());
+      setNotes(`Ground verification inspection conducted for target ${qUlpin.trim().toUpperCase()}. Boundary beacons inspected.`);
+    }
+
     const handleOnline = () => setIsOnline(true);
     const handleOffline = () => setIsOnline(false);
     window.addEventListener('online', handleOnline);
@@ -202,6 +210,28 @@ export const FieldObservationStudio: React.FC = () => {
                 className="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 font-mono text-slate-900 focus:outline-none focus:border-[#0B3B60] focus:bg-white"
                 required
               />
+              <div className="flex flex-wrap gap-1.5 mt-1.5 text-[11px]">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setTargetUlpin('TSHUK8ZNXG7QVJ');
+                    setNotes('Satellite Alert Investigation: Inspected cleared boundary area. Ground marker intact.');
+                  }}
+                  className="px-2 py-0.5 rounded bg-purple-50 text-purple-800 border border-purple-200 font-mono hover:bg-purple-100"
+                >
+                  TSHUK8ZNXG7QVJ (Satellite Anomaly)
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setTargetUlpin('TSQXY9QM4KNXSZ');
+                    setNotes('Clean title cadastral boundary survey. All 4 boundary pillars verified.');
+                  }}
+                  className="px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 font-mono hover:bg-emerald-100"
+                >
+                  TSQXY9QM4KNXSZ (Clean Plot)
+                </button>
+              </div>
             </div>
 
             <div>
